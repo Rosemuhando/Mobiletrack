@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.ui.theme.newwhite
+import com.rose.mobiletrack.ui.theme.pink
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -61,10 +62,10 @@ fun SplashScreen(navController: NavController) {
 
 
         Text(
-            text = "Uber",
-            fontSize = 50.sp,
+            text = "Mobile Track App",
+            fontSize = 40.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = newwhite
+            color = pink
 
 
         )

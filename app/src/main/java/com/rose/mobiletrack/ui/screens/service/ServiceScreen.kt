@@ -3,6 +3,7 @@ package com.rose.mobiletrack.ui.screens.service
 
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
@@ -59,6 +61,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.ui.theme.pink
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.ui.theme.newwhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -135,6 +138,10 @@ fun ServiceScreen(navController: NavController){
                 containerColor = pink
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                    .width(30.dp))
             }
         },
         content = { paddingValues ->
@@ -167,6 +174,8 @@ fun ServiceScreen(navController: NavController){
 
                 //end of search bar
                 Spacer(modifier = Modifier.height(10.dp))
+
+
                 Image(
                     painter = painterResource(R.drawable.img_3),
                     contentDescription = "home",
@@ -174,20 +183,24 @@ fun ServiceScreen(navController: NavController){
                     contentScale = ContentScale.FillWidth
 
                 )
-                Text(
-                    text = "Services available",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Center,
 
+                Spacer(modifier = Modifier.height(1.dp))
+                Column( modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center) {
 
-
+                    Text(
+                        text = "Services available",
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Center,
+                        color = newwhite
 
 
                     )
+                }
 
-
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Row (){
                     Image(painter = painterResource(R.drawable.services),
                         contentDescription = "img",
@@ -202,15 +215,11 @@ fun ServiceScreen(navController: NavController){
                             fontWeight = FontWeight.ExtraBold
                         )
                         Text(
-                            text = "one of the best and awesome services",
+                            text = "one of the best and awesome services.which is car repairing and engine fixing",
                             fontSize = 10.sp,
 
                             )
-                        Text(
-                            text = "Ksh.22,000",
-                            fontSize = 20.sp,
-                            textDecoration = TextDecoration.LineThrough
-                        )
+
                         Text(
                             text = "Ksh.19,000",
                             fontSize = 15.sp,
@@ -240,6 +249,57 @@ fun ServiceScreen(navController: NavController){
 
                 }
                 //end of row
+                Spacer(modifier = Modifier.height(10.dp))
+                Row (){
+                    Image(painter = painterResource(R.drawable.services),
+                        contentDescription = "img",
+                        modifier = Modifier.width(200.dp).height(150.dp).clip(shape = RoundedCornerShape(10.dp)),
+                        contentScale = ContentScale.FillWidth
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Column {
+                        Text(
+                            text = "here is also another service offered",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                        Text(
+                            text = "car hiring, pick up srevices and drop off services  ",
+                            fontSize = 10.sp,
+
+                            )
+
+                        Text(
+                            text = "Ksh.19,000",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                        Row() {
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "")
+
+                        }
+                        Spacer(modifier = Modifier.width(20.dp))
+                        Button(onClick = {val callIntent = Intent(Intent.ACTION_DIAL)
+                            callIntent.data = "tel:0720245837".toUri()
+                            mContext.startActivity(callIntent)
+                        },
+                            colors = ButtonDefaults.buttonColors(pink),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text( text = "Contact us ")
+                        }
+
+
+                    }
+
+                }
+                //end of row
+
+
 
 
 

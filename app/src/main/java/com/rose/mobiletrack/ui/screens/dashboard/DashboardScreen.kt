@@ -1,6 +1,7 @@
 package com.rose.mobiletrack.ui.screens.dashboard
+
+
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,9 +42,6 @@ import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_SERVICE
-import com.rose.mobiletrack.ui.theme.blue
-import com.rose.mobiletrack.ui.theme.neworange
-import com.rose.mobiletrack.ui.theme.neworange1
 import com.rose.mobiletrack.ui.theme.newwhite
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -233,7 +231,7 @@ fun DashboardScreen(navController: NavController){
                     horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
                 ){
                     Image(
-                        painter = painterResource(R.drawable.img),
+                        painter = painterResource(R.drawable.carservice),
                         contentDescription = "home",
                         modifier = Modifier.size(100.dp),
 

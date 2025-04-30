@@ -38,7 +38,7 @@ fun HomeScreen(navController: NavController) {
     )
     {
         Text(
-            text = "HarakaMall",
+            text = "Mobile Track App",
             fontSize = 50.sp,
             color = pink,
             fontWeight = FontWeight.ExtraBold,

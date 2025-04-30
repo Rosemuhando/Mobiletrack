@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -63,9 +64,10 @@ fun FormScreen(navController: NavController) {
         )
 
 
-        Text(text = "CREATE AN ACCOUNT",
+        Text(text = "FILL IN THE FORM",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
+            color =pink ,
 
 
             )
@@ -74,8 +76,9 @@ fun FormScreen(navController: NavController) {
         var fullname by remember { mutableStateOf("") }
         var username by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var confirmpassword by remember { mutableStateOf("") }
+        var pickuplocation by remember { mutableStateOf("") }
+        var dropofflocation by remember { mutableStateOf("") }
+
 
 
         //fullname
@@ -86,8 +89,8 @@ fun FormScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon =  { Icon(imageVector = Icons.Default.Person, contentDescription = "person", tint = pink)},
-            label = {Text("Fullname")},
+            leadingIcon =  { Icon(imageVector = Icons.Default.Face, contentDescription = "face", tint = pink)},
+            label = {Text("Taxi driver's name")},
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Gray,
                 focusedTextColor = pink,
@@ -104,6 +107,7 @@ fun FormScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         //Username
+
         OutlinedTextField(
             value = username,
             onValueChange = { username = it
@@ -111,8 +115,8 @@ fun FormScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon =  { Icon(imageVector = Icons.Default.Face, contentDescription = "", tint = pink)},
-            label = {Text("Username")},
+            leadingIcon =  { Icon(imageVector = Icons.Default.Face, contentDescription = "face", tint = pink)},
+            label = {Text("Passenger name")},
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Gray,
                 focusedTextColor = pink,
@@ -136,7 +140,7 @@ fun FormScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon =  { Icon(imageVector = Icons.Default.Email, contentDescription = "person", tint =pink)},
+            leadingIcon =  { Icon(imageVector = Icons.Default.Email, contentDescription = "mail", tint =pink)},
             label = {Text("Email Address")},
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Gray,
@@ -156,13 +160,13 @@ fun FormScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
         //PASSWORD
         OutlinedTextField(
-            value = password,
-            onValueChange = {password= it },
+            value = pickuplocation ,
+            onValueChange = {pickuplocation = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon =  { Icon(imageVector = Icons.Default.Lock, contentDescription = "person", tint = pink)},
-            label = {Text("password")},
+            leadingIcon =  { Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location", tint = pink)},
+            label = {Text("pick up location")},
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Gray,
                 focusedTextColor = pink,
@@ -186,13 +190,13 @@ fun FormScreen(navController: NavController) {
 
         //PASSWORD
         OutlinedTextField(
-            value =confirmpassword,
-            onValueChange = {confirmpassword= it },
+            value =dropofflocation,
+            onValueChange = {dropofflocation= it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon =  { Icon(imageVector = Icons.Default.Lock, contentDescription = "person", tint = pink)},
-            label = {Text("Confirm password")},
+            leadingIcon =  { Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location", tint = pink)},
+            label = {Text("drop off location")},
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Gray,
                 focusedTextColor = pink,

@@ -1,6 +1,7 @@
 package com.rose.mobiletrack.ui.screens.contact
 
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,13 +28,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.rose.mobiletrack.R
 import com.rose.mobiletrack.ui.theme.pink
 
 
@@ -42,10 +48,11 @@ import com.rose.mobiletrack.ui.theme.pink
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun ContactScreen(navController: NavController){
+fun ContactScreen(navController: NavController) {
     //Scaffold
 
     var selectedIndex by remember { mutableStateOf(0) }
+
 
     Scaffold(
         //TopBar
@@ -67,13 +74,14 @@ fun ContactScreen(navController: NavController){
 
         //BottomBar
         bottomBar = {
-            NavigationBar(containerColor = pink){
+            NavigationBar(containerColor = pink) {
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Home, contentDescription = "home") },
                     label = { Text("Search") },
                     selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0
-                       // navController.navigate(ROUT_HOME)
+                    onClick = {
+                        selectedIndex = 0
+                        // navController.navigate(ROUT_HOME)
                         //navController.navigate(ROUT_HOME)
                     }
                 )
@@ -81,7 +89,8 @@ fun ContactScreen(navController: NavController){
                     icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
                     label = { Text("Favorites") },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
+                    onClick = {
+                        selectedIndex = 1
                         // navController.navigate(ROUT_HOME)
                     }
                 )
@@ -92,12 +101,12 @@ fun ContactScreen(navController: NavController){
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
                     label = { Text("Profile") },
                     selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2
+                    onClick = {
+                        selectedIndex = 2
                         //  navController.navigate(ROUT_HOME)
 
                     }
                 )
-
 
 
             }
@@ -115,25 +124,29 @@ fun ContactScreen(navController: NavController){
         content = { paddingValues ->
             Column(
                 modifier = Modifier
-                    .padding(paddingValues)
                     .fillMaxSize()
-            ) {
+                    .paint(
+                        painter = painterResource(R.drawable.img_2),
+                        contentScale = ContentScale.FillBounds
+                    ),
+
+
+                ) {
 
 
                 //Main Contents of the page
                 Text(text = "Welcome to Homescreen Screen", fontSize = 20.sp)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(
+                    modifier = Modifier
+                        .height(8.dp)
+                        .fillMaxSize()
+                        .paint(
+                            painter = painterResource(R.drawable.img_2),
+                            contentScale = ContentScale.FillBounds
+                        ),
+
+                    )
                 Text("This is where the main content goes.")
-
-
-
-
-
-
-
-
-
-
 
 
             }
@@ -142,8 +155,8 @@ fun ContactScreen(navController: NavController){
 
     //End of scaffold
 
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
