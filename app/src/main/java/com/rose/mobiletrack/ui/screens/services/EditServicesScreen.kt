@@ -29,7 +29,7 @@ import com.rose.mobiletrack.viewmodel.servicesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditservicesScreen(servicesId: Int?, navController: NavController, viewModel: servicesViewModel) {
+fun EditServicesScreen(servicesId: Int?, navController: NavController, viewModel: servicesViewModel) {
 
     val context = LocalContext.current
     val servicesList by viewModel.allservices.observeAsState(emptyList())
@@ -136,7 +136,7 @@ fun EditservicesScreen(servicesId: Int?, navController: NavController, viewModel
                     onClick = {
                         val updatedPrice = price.toDoubleOrNull()
                         if (updatedPrice != null) {
-                            viewModel.updateservices(services.copy(name = name, price = updatedPrice, imagePath = imagePath))
+                            viewModel.updateServices(services.copy(name = name, price = updatedPrice, imagePath = imagePath))
                             Toast.makeText(context, "service Updated!", Toast.LENGTH_SHORT).show()
                             navController.popBackStack()
                         } else {

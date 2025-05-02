@@ -10,7 +10,7 @@ import kotlin.jvm.java
 
 @Database(entities = [services::class, User::class], version = 3, exportSchema = false)
 abstract class servicesDatabase : RoomDatabase() {
-    abstract fun productDao(): servicesDao
+    abstract fun servicesDao(): servicesDao
     abstract fun userDao(): UserDao
 
     companion object {

@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.rose.mobiletrack.data.servicesDao
 import com.rose.mobiletrack.data.servicesDatabase
 import com.rose.mobiletrack.model.services
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +18,12 @@ import kotlin.io.use
 class servicesViewModel(app: Application) : AndroidViewModel(app) {
 
     private val context = app.applicationContext
-    private val servicesDao = servicesDatabase.Companion.getDatabase(app).servicesDao()
+    private val servicesDao = servicesDatabase.Companion.getDatabase(app). servicesDao()
+
 
     val allservices: LiveData<List<services>> = servicesDao.getAllservices()
 
-    fun addServices(name: String, price: Double, phone: String, imageUri: String) {
+    fun addservices(name: String, price: Double, phone: String, imageUri: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val savedImagePath = saveImageToInternalStorage(Uri.parse(imageUri))
             val newservices = services(
@@ -38,14 +38,14 @@ class servicesViewModel(app: Application) : AndroidViewModel(app) {
 
     fun updateServices(updatedServices: services) {
         viewModelScope.launch(Dispatchers.IO) {
-            servicesDao.updateservices(updatedServices)
+            servicesDao.updateServices(updatedServices)
         }
     }
 
-    fun deleteservices(product: services) {
+    fun deleteservices(services: services) {
         viewModelScope.launch(Dispatchers.IO) {
             // Delete image from storage
-            deleteImageFromInternalStorage(product.imagePath)
+            deleteImageFromInternalStorage(services.imagePath)
             servicesDao.deleteservices(services)
         }
     }

@@ -42,15 +42,15 @@ import com.rose.mobiletrack.viewmodel.servicesViewModel
 import com.rose.mobiletrack.navigation.ROUT_ADD_SERVICES
 import com.rose.mobiletrack.navigation.ROUT_EDIT_SERVICES
 import com.rose.mobiletrack.navigation.ROUT_SERVICES_LIST
-import com.rose.mobiletrack.navigation.editServicesRoute
 import java.io.IOException
 import java.io.OutputStream
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.editservicesRoute
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun servicesListScreen(navController: NavController, viewModel: servicesViewModel) {
+fun ServicesListScreen(navController: NavController, viewModel: servicesViewModel) {
     val servicesList by viewModel.allservices.observeAsState(emptyList())
     var showMenu by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
@@ -155,7 +155,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            // Product Image
+            // service Image
             Image(
                 painter = painter,
                 contentDescription = "service Image",
@@ -178,7 +178,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
                     )
             )
 
-            // Product Info
+            // service Info
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -227,7 +227,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
                         }
                     }
 
-                    // Edit Product
+                    // Edit service
                     IconButton(
                         onClick = {
                             navController.navigate(editservicesRoute(services.id))
@@ -240,7 +240,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
                         )
                     }
 
-                    // Delete Product
+                    // Delete service
                     IconButton(
                         onClick = { viewModel.deleteservices(services) }
                     ) {
@@ -253,7 +253,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
 
                     // Download PDF
                     IconButton(
-                        onClick = { generateProductPDF(context, services) }
+                        onClick = { generateservicesPDF(context, services) }
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.download),
@@ -268,7 +268,7 @@ fun servicesItem(navController: NavController, services: services, viewModel: se
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
-fun generateProductPDF(context: Context, services: services) {
+fun generateservicesPDF(context: Context, services: services) {
     val pdfDocument = PdfDocument()
     val pageInfo = PdfDocument.PageInfo.Builder(300, 500, 1).create()
     val page = pdfDocument.startPage(pageInfo)

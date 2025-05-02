@@ -244,6 +244,65 @@ fun DashboardScreen(navController: NavController){
         }
 //end of row2
 
+        //row
+        Row(modifier = Modifier.padding(start = 20.dp)){
+            //card3
+
+            Card(
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(180.dp)
+                    .clickable{navController.navigate(ROUT_HOME)},
+                elevation = CardDefaults.cardElevation(10.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+
+
+
+                    Image(
+                        painter = painterResource(R.drawable.home),
+                        contentDescription = "home",
+                        modifier = Modifier.size(100.dp),
+
+
+                        )
+                    Text(text = "Home", fontSize = 15.sp)
+                }
+
+            }
+//end of card3
+
+            Spacer(modifier = Modifier.width(50.dp))
+            //card4
+
+            Card(
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(180.dp)
+                    .clickable{navController.navigate(ROUT_ABOUT)},
+                elevation = CardDefaults.cardElevation(10.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.about),
+                        contentDescription = "home",
+                        modifier = Modifier.size(100.dp),
+
+
+                        )
+                    Text(text = "About", fontSize = 15.sp)
+                }
+
+            }
+//end of card4
+        }
+//end of row
 
 
 

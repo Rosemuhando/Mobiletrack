@@ -12,21 +12,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.rose.mobiletrack.data.UserDatabase
-import com.rose.mobiletrack.model.services
 import com.rose.mobiletrack.repository.UserRepository
 import com.rose.mobiletrack.ui.screens.about.AboutScreen
 import com.rose.mobiletrack.ui.screens.contact.ContactScreen
 import com.rose.mobiletrack.ui.screens.dashboard.DashboardScreen
+import com.rose.mobiletrack.ui.screens.fare.FareScreen
 import com.rose.mobiletrack.ui.screens.form.FormScreen
 import com.rose.mobiletrack.ui.screens.home.HomeScreen
 import com.rose.mobiletrack.ui.screens.intent.IntentScreen
 import com.rose.mobiletrack.ui.screens.service.ServiceScreen
 import com.rose.mobiletrack.ui.screens.splash.SplashScreen
-import com.rose.mobiletrack.ui.screens.start.StartScreen
+import com.rose.mobiletrack.ui.screens.home.StartScreen
 import com.rose.mobiletrack.viewmodel.AuthViewModel
 import com.rose.mobiletrack.viewmodel.servicesViewModel
 import com.rosemuhando.harakamall.ui.screens.auth.LoginScreen
 import com.rosemuhando.harakamall.ui.screens.auth.RegisterScreen
+import com.rosemuhando.harakamall.ui.screens.products.AddservicesScreen
+import com.rosemuhando.harakamall.ui.screens.products.EditServicesScreen
+import com.rosemuhando.harakamall.ui.screens.products.ServicesListScreen
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -58,9 +61,7 @@ fun AppNavHost(
         composable(ROUT_DASHBOARD) {
             DashboardScreen(navController)
         }
-        composable(ROUT_START) {
-            StartScreen(navController)
-        }
+
         composable(ROUT_SERVICE) {
             ServiceScreen(navController)
         }
@@ -73,9 +74,11 @@ fun AppNavHost(
         composable(ROUT_INTENT) {
             IntentScreen(navController)
         }
-        composable(ROUT_EDIT_SERVICES) {
-            FormScreen(navController)
+
+        composable(ROUT_FARE) {
+            FareScreen(navController)
         }
+
 
 
         composable(ROUT_ADD_SERVICES) {
@@ -89,7 +92,7 @@ fun AppNavHost(
 
         // PRODUCTS
         composable(ROUT_ADD_SERVICES) {
-            AddServicesScreen(navController, servicesViewModel)
+            AddservicesScreen(navController, servicesViewModel)
         }
 
         composable(ROUT_SERVICES_LIST) {
@@ -100,9 +103,9 @@ fun AppNavHost(
             route = ROUT_EDIT_SERVICES,
             arguments = listOf(navArgument("servicesId") { type = NavType.IntType })
         ) { backStackEntry ->
-            val productId = backStackEntry.arguments?.getInt("servicesId")
-            if (productId != null) {
-                EditServicesScreen(servicesId, navController, servicesViewModel)
+            val servicesId = backStackEntry.arguments?.getInt("servicesId")
+            if (servicesId != null) {
+                EditServicesScreen(servicesId  , navController, servicesViewModel)
             }
         }
         //AUTHENTICATION
@@ -129,6 +132,3 @@ fun AppNavHost(
 
     }
 }
-
-
-

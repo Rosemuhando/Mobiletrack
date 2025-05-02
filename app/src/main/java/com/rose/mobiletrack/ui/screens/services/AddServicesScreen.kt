@@ -33,7 +33,7 @@ import com.rose.mobiletrack.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductScreen(navController: NavController, viewModel: servicesViewModel) {
+fun AddservicesScreen(navController: NavController, viewModel: servicesViewModel) {
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -97,22 +97,22 @@ fun AddProductScreen(navController: NavController, viewModel: servicesViewModel)
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Product Name
+                // services Name
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Product Name") },
+                    label = { Text("services Name") },
                     leadingIcon = { Icon(painter = painterResource(R.drawable.name), contentDescription = "Name") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // Product Price
+                // services Price
                 OutlinedTextField(
                     value = price,
                     onValueChange = { price = it },
-                    label = { Text("Product Price") },
+                    label = { Text("services Price") },
                     leadingIcon = { Icon(painter = painterResource(R.drawable.price), contentDescription = "Price") },
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -163,7 +163,7 @@ fun AddProductScreen(navController: NavController, viewModel: servicesViewModel)
                     onClick = {
                         val priceValue = price.toDoubleOrNull()
                         if (priceValue != null) {
-                            imageUri?.toString()?.let { viewModel.addProduct(name, priceValue, phone,it) }
+                            imageUri?.toString()?.let { viewModel.addservices(name, priceValue, phone,it) }
                             navController.popBackStack()
                             navController.navigate(ROUT_SERVICES_LIST)
                         }
@@ -172,7 +172,7 @@ fun AddProductScreen(navController: NavController, viewModel: servicesViewModel)
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(Color.LightGray)
                 ) {
-                    Text("Add Product", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text("Add services", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
