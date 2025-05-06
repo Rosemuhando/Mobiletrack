@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_ABOUT
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.ui.theme.pink
 
 @Composable
 
-fun StartScreen(navController: NavController){
+fun HomeScreen(navController: NavController){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -106,7 +107,7 @@ fun StartScreen(navController: NavController){
 
         Button(
             onClick = {
-                navController.navigate(ROUT_DASHBOARD)
+                navController.navigate(ROUT_ABOUT)
             },
             colors = ButtonDefaults.buttonColors(pink),
             shape = RoundedCornerShape(5.dp),
@@ -126,7 +127,7 @@ fun StartScreen(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun StartScreenPreview() {
-    StartScreen(rememberNavController())
+fun HomeScreenPreview() {
+    HomeScreen(rememberNavController())
 }
 

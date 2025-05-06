@@ -1,9 +1,11 @@
-package com.rose.mobiletrack.ui.screens.ridedetails
+package com.rosemuhando.harakamall.ui.screens.support
 
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
@@ -27,44 +29,56 @@ import com.rose.mobiletrack.ui.theme.pink
 
 
 @Composable
-fun ContactScreen(navController: NavController) {
+fun SupportScreen(navController: NavController) {
     val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .fillMaxSize()
             .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Contact Us", fontSize = 30.sp, fontWeight = FontWeight.ExtraBold, color = pink,)
+        Text(
+            "Need Help?",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = pink
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Email Button
+        // Email Support Button
         Button(
             onClick = {
                 val intent = Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto:support@mobiletrack.com")
-                    putExtra(Intent.EXTRA_SUBJECT, "Customer Support Inquiry")
+                    data = Uri.parse("mailto:support@example.com")
+                    putExtra(Intent.EXTRA_SUBJECT, "Support Request")
                 }
                 if (intent.resolveActivity(context.packageManager) != null) {
                     context.startActivity(intent)
                 } else {
-                    Toast.makeText(context, "No email app available", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00C6FF))
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF00C6FF),
+                contentColor = Color.White
+            )
         ) {
             Icon(Icons.Default.Email, contentDescription = "Email")
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Email Support")
+            Spacer(Modifier.width(10.dp))
+            Text("Contact via Email")
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Phone Button
+        // Phone Support Button
         Button(
             onClick = {
                 val intent = Intent(Intent.ACTION_DIAL).apply {
@@ -72,17 +86,24 @@ fun ContactScreen(navController: NavController) {
                 }
                 context.startActivity(intent)
             },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0072FF))
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF0072FF),
+                contentColor = Color.White
+            )
         ) {
             Icon(Icons.Default.Phone, contentDescription = "Phone")
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(Modifier.width(10.dp))
             Text("Call Support")
         }
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun ContactScreenPreview() {
-    ContactScreen(rememberNavController())
+fun SupportScreenPreview() {
+    SupportScreen(rememberNavController())
+
 }

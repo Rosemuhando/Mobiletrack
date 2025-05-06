@@ -16,8 +16,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -25,10 +27,10 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.rose.mobiletrack.R
 import com.rose.mobiletrack.model.User
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
-import com.rose.mobiletrack.viewmodel.AuthViewModel
+import com.rose.mobiletrack.R
+import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,9 +55,10 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
         Spacer(modifier = Modifier.height(8.dp))
         AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {

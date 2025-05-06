@@ -2,6 +2,7 @@ package com.rose.mobiletrack.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,22 +15,22 @@ import androidx.navigation.navArgument
 import com.rose.mobiletrack.data.UserDatabase
 import com.rose.mobiletrack.repository.UserRepository
 import com.rose.mobiletrack.ui.screens.about.AboutScreen
-import com.rose.mobiletrack.ui.screens.contact.ContactScreen
 import com.rose.mobiletrack.ui.screens.dashboard.DashboardScreen
-import com.rose.mobiletrack.ui.screens.fare.FareScreen
-import com.rose.mobiletrack.ui.screens.form.FormScreen
+import com.rose.mobiletrack.ui.screens.history.HistoryScreen
 import com.rose.mobiletrack.ui.screens.home.HomeScreen
-import com.rose.mobiletrack.ui.screens.intent.IntentScreen
-import com.rose.mobiletrack.ui.screens.service.ServiceScreen
+import com.rose.mobiletrack.ui.screens.payment.PaymentScreen
+import com.rose.mobiletrack.ui.screens.privacypolicy.PrivacyPolicyScreen
+import com.rose.mobiletrack.ui.screens.profile.ProfileScreen
+import com.rose.mobiletrack.ui.screens.rideconfirmation.RiderConfirmationScreen
+import com.rose.mobiletrack.ui.screens.ridedetails.ContactScreen
+import com.rose.mobiletrack.ui.screens.ridedetails.RideDetailsScreen
+import com.rose.mobiletrack.ui.screens.setting.SettingsScreen
 import com.rose.mobiletrack.ui.screens.splash.SplashScreen
-import com.rose.mobiletrack.ui.screens.home.StartScreen
-import com.rose.mobiletrack.viewmodel.AuthViewModel
-import com.rose.mobiletrack.viewmodel.servicesViewModel
+import com.rose.mobiletrack.ui.screens.tripinprogress.TripInProgressScreen
 import com.rosemuhando.harakamall.ui.screens.auth.LoginScreen
 import com.rosemuhando.harakamall.ui.screens.auth.RegisterScreen
-import com.rosemuhando.harakamall.ui.screens.products.AddservicesScreen
-import com.rosemuhando.harakamall.ui.screens.products.EditServicesScreen
-import com.rosemuhando.harakamall.ui.screens.products.ServicesListScreen
+import com.rosemuhando.harakamall.ui.screens.support.SupportScreen
+import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -54,6 +55,7 @@ fun AppNavHost(
             AboutScreen(navController)
         }
 
+
         composable(ROUT_CONTACT) {
             ContactScreen(navController)
         }
@@ -62,52 +64,36 @@ fun AppNavHost(
             DashboardScreen(navController)
         }
 
-        composable(ROUT_SERVICE) {
-            ServiceScreen(navController)
-        }
-        composable(ROUT_FORM) {
-            FormScreen(navController)
-        }
         composable(ROUT_SPLASH) {
             SplashScreen(navController)
         }
-        composable(ROUT_INTENT) {
-            IntentScreen(navController)
+
+        composable(ROUT_RIDER_DETAILS) {
+            RideDetailsScreen(navController)
+        }
+        composable(ROUT_SETTING) {
+            SettingsScreen(navController)
+        }
+        composable(ROUT_PAYMENT) {
+            PaymentScreen(navController)
+        }
+        composable(ROUT_PRIVACY_POLICY) {
+            PrivacyPolicyScreen(navController)
+        }
+        composable(ROUT_TRIP_IN_PROGRESS) {
+            TripInProgressScreen(navController)
+        }
+        composable(ROUT_HISTORY) {
+            HistoryScreen(navController)
+        }
+        composable(ROUT_PROFILE) {
+            ProfileScreen(navController)
+        }
+        composable(ROUT_SUPPORT) {
+            SupportScreen(navController)
         }
 
-        composable(ROUT_FARE) {
-            FareScreen(navController)
-        }
 
-
-
-        composable(ROUT_ADD_SERVICES) {
-            FormScreen(navController)
-        }
-
-
-        composable(ROUT_SERVICES_LIST) {
-            FormScreen(navController)
-        }
-
-        // PRODUCTS
-        composable(ROUT_ADD_SERVICES) {
-            AddservicesScreen(navController, servicesViewModel)
-        }
-
-        composable(ROUT_SERVICES_LIST) {
-            ServicesListScreen(navController, servicesViewModel)
-        }
-
-        composable(
-            route = ROUT_EDIT_SERVICES,
-            arguments = listOf(navArgument("servicesId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val servicesId = backStackEntry.arguments?.getInt("servicesId")
-            if (servicesId != null) {
-                EditServicesScreen(servicesId  , navController, servicesViewModel)
-            }
-        }
         //AUTHENTICATION
 
         // Initialize Room Database and Repository for Authentication
@@ -130,5 +116,39 @@ fun AppNavHost(
             }
         }
 
+
+        /// rider confirmation
+        composable(
+            "ride_confirmation/{name}/{phone}/{pickup}/{drop}/{distance}/{fare}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType },
+                navArgument("phone") { type = NavType.StringType },
+                navArgument("pickup") { type = NavType.StringType },
+                navArgument("drop") { type = NavType.StringType },
+                navArgument("distance") { type = NavType.FloatType },
+                navArgument("fare") { type = NavType.IntType },
+            )
+        ) { backStackEntry ->
+            RiderConfirmationScreen(
+                navController = navController,
+                name = backStackEntry.arguments?.getString("name") ?: "",
+                phone = backStackEntry.arguments?.getString("phone") ?: "",
+                pickup = backStackEntry.arguments?.getString("pickup") ?: "",
+                drop = backStackEntry.arguments?.getString("drop") ?: "",
+                distance = backStackEntry.arguments?.getFloat("distance")?.toDouble() ?: 0.0,
+                fare = backStackEntry.arguments?.getInt("fare") ?: 0
+            )
+        }
+
+
+//rider history
+
+
+
     }
 }
+
+
+
+
+

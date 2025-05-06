@@ -1,5 +1,6 @@
 package com.rose.mobiletrack.model
 
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

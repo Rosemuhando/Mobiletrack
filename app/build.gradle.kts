@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,26 +57,28 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    /// navigation
+    // navigation
     implementation("androidx.navigation:navigation-runtime-ktx:2.8.9")
     implementation("androidx.navigation:navigation-compose:2.8.9")
 
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 
-    //Room
-    implementation ("androidx.room:room-runtime:2.6.1")
-    kapt ("androidx.room:room-compiler:2.6.1")
-    implementation ("androidx.room:room-ktx:2.6.1")
+    // Image Loading (Coil for Jetpack Compose)
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
-// Image Loading (Coil for Jetpack Compose)
-    implementation ("io.coil-kt:coil-compose:2.4.0")
-//Livedata
-    implementation ("androidx.compose.runtime:runtime-livedata:1.6.4")
+    // Livedata
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
 
-
-
-
+    // google maps
 
 
-
+    // FAQ (Question and Answer)
+    implementation("androidx.compose.ui:ui:1.3.0")
+    implementation("androidx.compose.material3:material3:1.0.0")
+    implementation("androidx.compose.foundation:foundation:1.3.0")
+    implementation("androidx.compose.foundation:foundation-layout:1.3.0")
 
 }

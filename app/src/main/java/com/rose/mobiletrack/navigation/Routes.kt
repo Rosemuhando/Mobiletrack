@@ -4,22 +4,21 @@ const val ROUT_HOME = "home"
 const val ROUT_ABOUT = "about"
 const val ROUT_DASHBOARD= "dashboard"
 const val ROUT_CONTACT= "contact"
-const val ROUT_SERVICE= "service"
 const val ROUT_SPLASH= "splash"
-const val ROUT_FORM= "form"
-const val ROUT_INTENT= "form"
-const val ROUT_FARE= "form"
+const val ROUT_HISTORY= "history"
+const val ROUT_PAYMENT= "payment"
+const val ROUT_PRIVACY_POLICY= "privacy&policy"
+const val ROUT_SETTING= "settings"
+const val ROUT_RIDER_DETAILS= "rider details"
+const val ROUT_RIDER_CONFIRMATION= "rider confirmation"
+const val ROUT_TRIP_IN_PROGRESS= "trip in progress"
+const val ROUT_PROFILE= "profile"
+const val ROUT_SUPPORT= "support"
+
 
 //authentication
 const val ROUT_REGISTER= "register"
 const val ROUT_LOGIN = "Login"
 
-//SERVICES
 
-const val ROUT_ADD_SERVICES = "add_Services"
-const val ROUT_SERVICES_LIST = "Services_list"
-const val ROUT_EDIT_SERVICES = "edit_Services/Id}"
-
-// ✅ Helper function for navigation
-fun editservicesRoute(servicesId: Int) = "edit_Services/$servicesId"
 

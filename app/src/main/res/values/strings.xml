@@ -1,3 +1,11 @@
+
+
 <resources>
-    <string name="app_name">MobileTrack</string>
+
+
+<!-- Google Maps API Key -->
+<string name="google_maps_api_key">YOUR_GOOGLE_MAPS_API_KEY_HERE</string>
+
+<!-- Other strings -->
+<string name="app_name">MobileTrack</string>
 </resources>

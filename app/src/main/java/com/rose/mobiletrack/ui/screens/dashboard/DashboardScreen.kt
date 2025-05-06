@@ -40,8 +40,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
+import com.rose.mobiletrack.navigation.ROUT_CONTACT
+import com.rose.mobiletrack.navigation.ROUT_HISTORY
 import com.rose.mobiletrack.navigation.ROUT_HOME
-import com.rose.mobiletrack.navigation.ROUT_SERVICE
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
+import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
+import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_RIDER_CONFIRMATION
+import com.rose.mobiletrack.navigation.ROUT_RIDER_DETAILS
+import com.rose.mobiletrack.navigation.ROUT_SETTING
+import com.rose.mobiletrack.navigation.ROUT_SUPPORT
+import com.rose.mobiletrack.navigation.ROUT_TRIP_IN_PROGRESS
 import com.rose.mobiletrack.ui.theme.newwhite
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -125,15 +134,15 @@ fun DashboardScreen(navController: NavController){
         //end of box
         Spacer(modifier = Modifier.height(100.dp))
         //row
-        Row(modifier = Modifier.padding(start = 20.dp)){
+        Row(modifier = Modifier.padding(start = 10.dp)){
             //card3
 
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
+                    .width(80.dp)
+                    .height(100.dp)
                     .clickable{navController.navigate(ROUT_HOME)},
-                elevation = CardDefaults.cardElevation(10.dp)
+                elevation = CardDefaults.cardElevation(5.dp)
             ) {
                 Column (
                     modifier = Modifier.fillMaxSize(),
@@ -145,25 +154,25 @@ fun DashboardScreen(navController: NavController){
                     Image(
                         painter = painterResource(R.drawable.home),
                         contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        modifier = Modifier.size(50.dp),
 
 
                         )
-                    Text(text = "Home", fontSize = 15.sp)
+                    Text(text = "Home", fontSize = 10.sp)
                 }
 
             }
 //end of card3
 
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             //card4
 
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
+                    .width(80.dp)
+                    .height(100.dp)
                     .clickable{navController.navigate(ROUT_ABOUT)},
-                elevation = CardDefaults.cardElevation(10.dp)
+                elevation = CardDefaults.cardElevation(5.dp)
             ) {
                 Column (
                     modifier = Modifier.fillMaxSize(),
@@ -172,28 +181,21 @@ fun DashboardScreen(navController: NavController){
                     Image(
                         painter = painterResource(R.drawable.about),
                         contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        modifier = Modifier.size(50.dp),
 
 
                         )
-                    Text(text = "About", fontSize = 15.sp)
+                    Text(text = "About", fontSize = 10.sp)
                 }
 
             }
 //end of card4
-        }
-//end of row
-
-        Spacer(modifier = Modifier.height(50.dp))
-        //row2
-        Row(modifier = Modifier.padding(start = 20.dp)){
-            //card3
-
+            Spacer(modifier = Modifier.width(20.dp))
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
-                    .clickable{navController.navigate(ROUT_HOME)},
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_CONTACT)},
                 elevation = CardDefaults.cardElevation(10.dp)
             ) {
                 Column (
@@ -206,25 +208,25 @@ fun DashboardScreen(navController: NavController){
                     Image(
                         painter = painterResource(R.drawable.contact),
                         contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        modifier = Modifier.size(50.dp),
 
 
                         )
-                    Text(text = "contact", fontSize = 15.sp)
+                    Text(text = "contact", fontSize = 10.sp)
                 }
 
             }
 //end of card3
 
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             //card4
 
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
-                    .clickable{navController.navigate(ROUT_SERVICE) },
-                elevation = CardDefaults.cardElevation(10.dp)
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_TRIP_IN_PROGRESS) },
+                elevation = CardDefaults.cardElevation(5.dp)
             ) {
                 Column (
                     modifier = Modifier.fillMaxSize(),
@@ -233,26 +235,139 @@ fun DashboardScreen(navController: NavController){
                     Image(
                         painter = painterResource(R.drawable.carservice),
                         contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        modifier = Modifier.size(50.dp),
 
                         )
-                    Text(text = "Services", fontSize = 15.sp)
+                    Text(text = " Trip in Progress", fontSize = 10.sp)
+                }
+
+            }
+//end of card4
+        }
+//end of row
+
+        Spacer(modifier = Modifier.height(20.dp))
+        //row2
+        Row(modifier = Modifier.padding(start = 10.dp)){
+            //card3
+
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_HISTORY)},
+                elevation = CardDefaults.cardElevation(5.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+
+
+
+                    Image(
+                        painter = painterResource(R.drawable.history),
+                        contentDescription = "history",
+                        modifier = Modifier.size(50.dp),
+
+
+                        )
+                    Text(text = "history", fontSize = 10.sp)
+                }
+
+            }
+//end of card3
+
+            Spacer(modifier = Modifier.width(20.dp))
+            //card4
+
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_PAYMENT) },
+                elevation = CardDefaults.cardElevation(5.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.payment),
+                        contentDescription = "",
+                        modifier = Modifier.size(50.dp),
+
+                        )
+                    Text(text = " payment", fontSize = 10.sp)
+                }
+
+            }
+//end of card4
+            Spacer(modifier = Modifier.width(20.dp))
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_PRIVACY_POLICY)},
+                elevation = CardDefaults.cardElevation(5.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+
+
+
+                    Image(
+                        painter = painterResource(R.drawable.privacy),
+                        contentDescription = "home",
+                        modifier = Modifier.size(50.dp),
+
+
+                        )
+                    Text(text = "privacy&policy", fontSize = 10.sp)
+                }
+
+            }
+//end of card3
+
+            Spacer(modifier = Modifier.width(20.dp))
+            //card4
+
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_RIDER_CONFIRMATION) },
+                elevation = CardDefaults.cardElevation(5.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.confirmation),
+                        contentDescription = "home",
+                        modifier = Modifier.size(50.dp),
+
+                        )
+                    Text(text = " Rider confirmation", fontSize = 10.sp)
                 }
 
             }
 //end of card4
         }
 //end of row2
-
+        Spacer(modifier = Modifier.height(20.dp))
         //row
-        Row(modifier = Modifier.padding(start = 20.dp)){
+        Row(modifier = Modifier.padding(start = 10.dp)){
             //card3
 
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
-                    .clickable{navController.navigate(ROUT_HOME)},
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_SETTING)},
                 elevation = CardDefaults.cardElevation(10.dp)
             ) {
                 Column (
@@ -263,26 +378,26 @@ fun DashboardScreen(navController: NavController){
 
 
                     Image(
-                        painter = painterResource(R.drawable.home),
-                        contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        painter = painterResource(R.drawable.settings),
+                        contentDescription = "payment",
+                        modifier = Modifier.size(50.dp),
 
 
                         )
-                    Text(text = "Home", fontSize = 15.sp)
+                    Text(text = "settings", fontSize = 10.sp)
                 }
 
             }
 //end of card3
 
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             //card4
 
             Card(
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
-                    .clickable{navController.navigate(ROUT_ABOUT)},
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_SUPPORT)},
                 elevation = CardDefaults.cardElevation(10.dp)
             ) {
                 Column (
@@ -290,13 +405,66 @@ fun DashboardScreen(navController: NavController){
                     horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
                 ){
                     Image(
-                        painter = painterResource(R.drawable.about),
-                        contentDescription = "home",
-                        modifier = Modifier.size(100.dp),
+                        painter = painterResource(R.drawable.support),
+                        contentDescription = "Support",
+                        modifier = Modifier.size(50.dp),
 
 
                         )
-                    Text(text = "About", fontSize = 15.sp)
+                    Text(text = "support", fontSize = 10.sp)
+                }
+
+            }
+//end of card4
+            Spacer(modifier = Modifier.width(20.dp))
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_PROFILE)},
+                elevation = CardDefaults.cardElevation(10.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+
+
+
+                    Image(
+                        painter = painterResource(R.drawable.profile1),
+                        contentDescription = "home",
+                        modifier = Modifier.size(50.dp),
+
+
+                        )
+                    Text(text = "Profile", fontSize = 10.sp)
+                }
+
+            }
+//end of card3
+
+            Spacer(modifier = Modifier.width(20.dp))
+            //card4
+
+            Card(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(100.dp)
+                    .clickable{navController.navigate(ROUT_RIDER_DETAILS) },
+                elevation = CardDefaults.cardElevation(10.dp)
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.details),
+                        contentDescription = "home",
+                        modifier = Modifier.size(50.dp),
+
+                        )
+                    Text(text = " Rider details", fontSize = 10.sp)
                 }
 
             }

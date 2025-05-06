@@ -1,3 +1,4 @@
+
 package com.rosemuhando.harakamall.ui.screens.auth
 
 import android.widget.Toast
@@ -15,8 +16,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -24,11 +27,11 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.rose.mobiletrack.R
-import com.rose.mobiletrack.navigation.ROUT_ABOUT
-import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_REGISTER
-import com.rose.mobiletrack.viewmodel.AuthViewModel
+import com.rosemuhando.harakamall.viewmodel.AuthViewModel
+import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
 
 @Composable
 fun LoginScreen(
@@ -48,10 +51,11 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
+
                     navController.navigate(ROUT_HOME) {
                     }
                 } else {
-                    navController.navigate(ROUT_ABOUT) {
+                    navController.navigate(ROUT_PRIVACY_POLICY) {
                     }
                 }
             }
@@ -62,9 +66,10 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center,
+
     ) {
         // Animated Welcome Text
         AnimatedVisibility(
