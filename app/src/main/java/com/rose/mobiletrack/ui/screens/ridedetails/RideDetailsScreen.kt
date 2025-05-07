@@ -2,15 +2,18 @@ package com.rose.mobiletrack.ui.screens.ridedetails
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.rose.mobiletrack.R
-import com.rose.mobiletrack.ui.theme.pink
+import com.rose.mobiletrack.ui.theme.blue1
 import kotlin.random.Random
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RideDetailsScreen(navController: NavController) {
     val context = LocalContext.current
@@ -31,113 +34,155 @@ fun RideDetailsScreen(navController: NavController) {
     var drop by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var result by remember { mutableStateOf("") }
-
-    // Distance will be calculated internally
     var calculatedDistance by remember { mutableStateOf(0.0) }
 
     fun calculateDistance(pickup: String, drop: String): Double {
-        // Placeholder function – in a real app, use coordinates or an API
         return if (pickup.lowercase() != drop.lowercase()) {
             Random.nextDouble(0.5, 5.0)
-        } else {
-            0.0
-        }
+        } else 0.0
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            "Ride Details",
-            style = MaterialTheme.typography.headlineMedium,
-            fontSize = 40.sp,
-            color = pink,
-            fontWeight = FontWeight.ExtraBold
-        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Ride Details") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = blue1,
+                    titleContentColor = Color.White
+                )
+            )
+        },
+        bottomBar = {
+            NavigationBar(containerColor = blue1) {
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { /* Navigate to Home */ },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text("Home") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        unselectedIconColor = Color.LightGray,
+                        selectedTextColor = Color.White,
+                        unselectedTextColor = Color.LightGray
+                    )
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { /* Navigate to Settings */ },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                    label = { Text("Settings") }
+                )
+            }
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    "Enter Ride Info",
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = blue1
+                )
 
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Enter your name") },
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Your Name") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        OutlinedTextField(
-            value = pickup,
-            onValueChange = { pickup = it },
-            label = { Text("Pick-up location") },
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = pickup,
+                    onValueChange = { pickup = it },
+                    label = { Text("Pick-up Location") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        OutlinedTextField(
-            value = drop,
-            onValueChange = { drop = it },
-            label = { Text("Drop-off location") },
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = drop,
+                    onValueChange = { drop = it },
+                    label = { Text("Drop-off Location") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Enter your phone number") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            modifier = Modifier.fillMaxWidth()
-        )
+                Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { phone = it },
+                    label = { Text("Phone Number") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-        Button(
-            onClick = {
-                if (name.isBlank() || pickup.isBlank() || drop.isBlank() || phone.isBlank()) {
-                    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
-                    return@Button
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Button(
+                    onClick = {
+                        if (name.isBlank() || pickup.isBlank() || drop.isBlank() || phone.isBlank()) {
+                            Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+
+                        if (phone.length != 10 || !phone.all { it.isDigit() }) {
+                            Toast.makeText(context, "Enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+
+                        calculatedDistance = calculateDistance(pickup, drop)
+                        val fare = if (calculatedDistance >= 1.0) 500 else 300
+
+                        result = """
+                            Name: $name
+                            Pickup: $pickup
+                            Drop-off: $drop
+                            Distance: ${"%.2f".format(calculatedDistance)} km
+                            Fare: Ksh $fare
+                            Phone: $phone
+                        """.trimIndent()
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = blue1)
+                ) {
+                    Text("Calculate Fare")
                 }
 
-                if (phone.length != 10 || !phone.all { it.isDigit() }) {
-                    Toast.makeText(context, "Enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show()
-                    return@Button
+                Spacer(modifier = Modifier.height(20.dp))
+
+                if (result.isNotEmpty()) {
+                    Text(
+                        text = result,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium
+                    )
                 }
-
-                calculatedDistance = calculateDistance(pickup, drop)
-
-                val fare = if (calculatedDistance >= 1.0) 500 else 300
-                result = """
-                    Name: $name
-                    Pickup: $pickup
-                    Drop-off: $drop
-                    Distance: ${"%.2f".format(calculatedDistance)} km
-                    Fare: Ksh $fare
-                    Phone: $phone
-                """.trimIndent()
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(pink),
-        ) {
-            Text("Calculate Fare")
+            }
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        if (result.isNotEmpty()) {
-            Text(text = result, style = MaterialTheme.typography.bodyLarge)
-        }
-    }
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun RideDetailsScreenPreview() {
-    RideDetailsScreen(navController = rememberNavController())
+    RideDetailsScreen(rememberNavController())
 }

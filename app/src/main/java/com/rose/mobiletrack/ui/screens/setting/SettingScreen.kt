@@ -1,103 +1,130 @@
 package com.rose.mobiletrack.ui.screens.setting
 
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
+import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
     var notificationsEnabled by remember { mutableStateOf(true) }
     var darkModeEnabled by remember { mutableStateOf(false) }
     var selectedLanguage by remember { mutableStateOf("English") }
+    var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .fillMaxSize()
-        .fillMaxSize()
-        .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Settings", color = Color.White)
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = blue1)
+            )
+        },
+        bottomBar = {
+            NavigationBar(containerColor = blue1) {
+                NavigationBarItem(
+                    icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") },
+                    label = { Text("Home") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_ABOUT) }
+                )
+            }
+        },
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .padding(16.dp)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                Spacer(modifier = Modifier.height(12.dp))
 
-        Text(
-            text = "Settings",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = pink,
-                    fontSize = (40.sp)
+                Text("App Preferences", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = blue1)
 
-        )
+                Spacer(modifier = Modifier.height(8.dp))
+                SettingToggleItem(
+                    title = "Enable Notifications",
+                    checked = notificationsEnabled,
+                    onCheckedChange = { notificationsEnabled = it }
+                )
+                SettingToggleItem(
+                    title = "Dark Mode",
+                    checked = darkModeEnabled,
+                    onCheckedChange = { darkModeEnabled = it }
+                )
 
-        Spacer(modifier = Modifier.height(16.dp))
+                SettingDropdownItem(
+                    title = "Language",
+                    selectedOption = selectedLanguage,
+                    options = listOf("English", "Swahili", "French"),
+                    onOptionSelected = { selectedLanguage = it }
+                )
 
-        // Notifications toggle
-        SettingToggleItem(
-            title = "Enable Notifications",
-            checked = notificationsEnabled,
-            onCheckedChange = { notificationsEnabled = it }
-        )
+                Spacer(modifier = Modifier.height(20.dp))
 
-        // Dark mode toggle
-        SettingToggleItem(
-            title = "Dark Mode",
-            checked = darkModeEnabled,
-            onCheckedChange = { darkModeEnabled = it }
-        )
+                Text("Legal", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = blue1)
 
-        // Language selection
-        SettingDropdownItem(
-            title = "Language",
-            selectedOption = selectedLanguage,
-            options = listOf("English", "Swahili", "French"),
-            onOptionSelected = { selectedLanguage = it }
-        )
+                SettingLinkItem(title = "Privacy Policy") {
+                    navController.navigate(ROUT_PRIVACY_POLICY)
+                }
 
-        // Links
-        SettingLinkItem(title = "Terms & Conditions") {
-            Toast.makeText(context, "Opening Terms & Conditions...", Toast.LENGTH_SHORT).show()
+                SettingLinkItem(title = "Terms & Conditions") {
+                    Toast.makeText(context, "Coming soon...", Toast.LENGTH_SHORT).show()
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(
+                    onClick = {
+                        Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
+                        navController.navigate(ROUT_LOGIN)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = blue1),
+                    shape = RoundedCornerShape(10.dp),
+                    elevation = ButtonDefaults.buttonElevation(8.dp)
+                ) {
+                    Text("Log Out", color = Color.White)
+                }
+            }
         }
-
-        SettingLinkItem(title = "Privacy Policy") {
-            Toast.makeText(context, "Opening Privacy Policy...", Toast.LENGTH_SHORT).show()
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Button(
-            onClick = {
-                Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
-
-                    navController.navigate(ROUT_LOGIN)
-
-                // Navigate to login or home
-                // navController.navigate("login") { popUpTo("settings") { inclusive = true } }
-            },
-            colors = ButtonDefaults.buttonColors(pink),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Log Out")
-        }
-    }
+    )
 }
 
 @Composable
@@ -173,9 +200,9 @@ fun SettingLinkItem(title: String, onClick: () -> Unit) {
         Icon(Icons.Default.ArrowForward, contentDescription = null)
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreenPreview() {
     SettingsScreen(rememberNavController())
-
 }

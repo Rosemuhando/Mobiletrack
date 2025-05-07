@@ -15,8 +15,8 @@ import androidx.navigation.navArgument
 import com.rose.mobiletrack.data.UserDatabase
 import com.rose.mobiletrack.repository.UserRepository
 import com.rose.mobiletrack.ui.screens.about.AboutScreen
+import com.rose.mobiletrack.ui.screens.auth.RegisterScreen
 import com.rose.mobiletrack.ui.screens.dashboard.DashboardScreen
-import com.rose.mobiletrack.ui.screens.history.HistoryScreen
 import com.rose.mobiletrack.ui.screens.home.HomeScreen
 import com.rose.mobiletrack.ui.screens.payment.PaymentScreen
 import com.rose.mobiletrack.ui.screens.privacypolicy.PrivacyPolicyScreen
@@ -26,9 +26,7 @@ import com.rose.mobiletrack.ui.screens.ridedetails.ContactScreen
 import com.rose.mobiletrack.ui.screens.ridedetails.RideDetailsScreen
 import com.rose.mobiletrack.ui.screens.setting.SettingsScreen
 import com.rose.mobiletrack.ui.screens.splash.SplashScreen
-import com.rose.mobiletrack.ui.screens.tripinprogress.TripInProgressScreen
 import com.rosemuhando.harakamall.ui.screens.auth.LoginScreen
-import com.rosemuhando.harakamall.ui.screens.auth.RegisterScreen
 import com.rosemuhando.harakamall.ui.screens.support.SupportScreen
 import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 
@@ -38,7 +36,7 @@ import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUT_SPLASH,
+    startDestination: String = ROUT_DASHBOARD,
 
     ) {
 
@@ -80,12 +78,7 @@ fun AppNavHost(
         composable(ROUT_PRIVACY_POLICY) {
             PrivacyPolicyScreen(navController)
         }
-        composable(ROUT_TRIP_IN_PROGRESS) {
-            TripInProgressScreen(navController)
-        }
-        composable(ROUT_HISTORY) {
-            HistoryScreen(navController)
-        }
+
         composable(ROUT_PROFILE) {
             ProfileScreen(navController)
         }

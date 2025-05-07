@@ -1,4 +1,4 @@
-package com.rosemuhando.harakamall.ui.screens.auth
+package com.rose.mobiletrack.ui.screens.auth
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility

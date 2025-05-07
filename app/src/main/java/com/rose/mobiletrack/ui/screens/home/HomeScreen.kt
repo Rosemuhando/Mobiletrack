@@ -1,24 +1,26 @@
 package com.rose.mobiletrack.ui.screens.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,99 +32,167 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
-import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
-fun HomeScreen(navController: NavController){
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+fun HomeScreen(navController: NavController) {
 
 
-        ){
-        Text(
-            text = "Mobile Track App",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = pink
+    //Scaffold
 
-        )
-        Spacer(modifier = Modifier.height(20.dp))
+    var selectedIndex by remember { mutableStateOf(0) }
 
-
-// circular image
-        Image(
-            painter = painterResource(R.drawable.img_3),
-            contentDescription = "home",
-            modifier = Modifier
-                .size(300.dp)
-                .clip(shape = CircleShape),
-            contentScale = ContentScale.Crop
-        )
-//end of circular image
-
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Make your booking!!!",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = pink
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Welcome to my app Mobile Track ",
-            textAlign = TextAlign.Center,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.ExtraBold,
-
-
+    Scaffold(
+        //TopBar
+        topBar = {
+            TopAppBar(
+                title = {  Text(text = "Mobile Track App")},
+                navigationIcon = {
+                    IconButton(onClick = { /* Handle back/nav */ }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = blue1,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
             )
-        Text(
-            text = "Mobile Track is an application provides mobility to any customer .",
-            textAlign = TextAlign.Center,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.ExtraBold,
+        },
+
+        //BottomBar
+        bottomBar = {
+            NavigationBar(containerColor = blue1){
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "home") },
+                    label = { Text("Search") },
+                    selected = selectedIndex == 0,
+                    onClick = { selectedIndex = 0
+                        navController.navigate(ROUT_HOME)
+                        //navController.navigate(ROUT_HOME)
+                    }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
+                    label = { Text("Favorites") },
+                    selected = selectedIndex == 1,
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_HOME)
+                    }
+                )
 
 
-            )
-        Text(
-            text = "it also keeps track off the distance covered by the taxi driver hence, showing the given amount off money the customer ows the taxi driver according to the company's specifications for intance if the car is to cover 1km the customer is to pay ksh 500  ",
-            textAlign = TextAlign.Center,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.ExtraBold,
 
-            )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+                    label = { Text("Profile") },
+                    selected = selectedIndex == 2,
+                    onClick = { selectedIndex = 2
+                         navController.navigate(ROUT_PROFILE)
+
+                    }
+                )
 
 
 
+            }
+        },
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(
-            onClick = {
-                navController.navigate(ROUT_ABOUT)
-            },
-            colors = ButtonDefaults.buttonColors(pink),
-            shape = RoundedCornerShape(5.dp),
-            modifier = Modifier.fillMaxWidth().padding(start = 20.dp,end =20.dp),
+        //FloatingActionButton
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { /* Add action */ },
+                containerColor = blue1
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
 
             ) {
-            Text(text = "get started")
+
+
+                //Main Contents of the page
+
+
+
+                CardWithImageAndText(
+                    imageRes = R.drawable.img_6,
+                    title = "Easy Booking",
+                    description = "Make your bookings easily from anywhere at any time. Convenience at your fingertips."
+                )
+
+                CardWithImageAndText(
+                    imageRes = R.drawable.img_5,
+                    title = "Distance Tracking",
+                    description = "Track the exact distance covered during your trip. Transparent and reliable."
+                )
+
+                CardWithImageAndText(
+                    imageRes = R.drawable.img_4,
+                    title = "Fair Pricing",
+                    description = "Our rates are simple: Ksh 300 for less than 1km, Ksh 500 for 1km or more."
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+            }
+
+
+
+
         }
+    )
 
+    //End of scaffold
+}
+
+
+@Composable
+fun CardWithImageAndText(imageRes: Int, title: String, description: String) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(12.dp))
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = pink
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = description,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Justify
+            )
+        }
     }
-
-
-
-
-
 }
 
 @Preview(showBackground = true)
@@ -130,4 +200,3 @@ fun HomeScreen(navController: NavController){
 fun HomeScreenPreview() {
     HomeScreen(rememberNavController())
 }
-

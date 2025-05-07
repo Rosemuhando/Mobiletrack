@@ -1,35 +1,19 @@
 package com.rose.mobiletrack.ui.screens.dashboard
 
-
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,453 +23,187 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
-import com.rose.mobiletrack.navigation.ROUT_ABOUT
-import com.rose.mobiletrack.navigation.ROUT_CONTACT
-import com.rose.mobiletrack.navigation.ROUT_HISTORY
-import com.rose.mobiletrack.navigation.ROUT_HOME
-import com.rose.mobiletrack.navigation.ROUT_PAYMENT
-import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
-import com.rose.mobiletrack.navigation.ROUT_PROFILE
-import com.rose.mobiletrack.navigation.ROUT_RIDER_CONFIRMATION
-import com.rose.mobiletrack.navigation.ROUT_RIDER_DETAILS
-import com.rose.mobiletrack.navigation.ROUT_SETTING
-import com.rose.mobiletrack.navigation.ROUT_SUPPORT
-import com.rose.mobiletrack.navigation.ROUT_TRIP_IN_PROGRESS
-import com.rose.mobiletrack.ui.theme.newwhite
+import com.rose.mobiletrack.navigation.*
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.vector.ImageVector
 
+
+data class BottomNavItem(
+    val label: String,
+    val icon: ImageVector,
+    val route: String
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun DashboardScreen(navController: NavController) {
+    var selectedItem by remember { mutableStateOf(0) }
 
-fun DashboardScreen(navController: NavController){
+    val navItems = listOf(
+        BottomNavItem("Home", Icons.Default.Home, ROUT_HOME),
+        BottomNavItem("Profile", Icons.Default.Person, ROUT_PROFILE),
+        BottomNavItem("Settings", Icons.Default.Settings, ROUT_SETTING)
+    )
 
-    Column(modifier = Modifier.fillMaxSize().paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds)
-
-    ) {
-//box
-        Box(){
-            //CARD1
-            Card(
-                modifier = Modifier.fillMaxWidth().height(300.dp),
-                shape = RoundedCornerShape(bottomStart = 60.dp, bottomEnd = 60.dp),
-                colors = CardDefaults.cardColors(pink)
-            ){
-                TopAppBar(
-                    title = { Text(text = "Dashboard Section") },
-                    navigationIcon = {
-                        IconButton(onClick = {}) { Icon(imageVector = Icons.Default.Menu, contentDescription = "")
-                        }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("MobileTrack Dashboard") },
+                navigationIcon = {
+                    IconButton(onClick = { /* handle drawer/menu */ }) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
                     }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = blue1,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 )
-
-
-                Column( modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,) {
-                    Text(text = "WELCOME TO OUR DASHBOARD ",
-                        fontSize = 25.sp,
-                        color = newwhite,
-                        fontWeight = FontWeight.ExtraBold,
-
-                        )
-                    Image(
-                        painter = painterResource(R.drawable.img_3),
-                        contentDescription = "home",
-                        modifier = Modifier.size(300.dp),
-
-                        )
-
-
-                }
-
-            }
-//END OF CARD1
-
-            //CARD2
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp)
-                .align(alignment = Alignment.BottomCenter)
-                .padding(start = 20.dp, end = 20.dp)
-                .offset(y = 90.dp)
-
-            ) {
-
-
-//Card contents
-                Column( modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center){
-
-                    Text(text = " Hello there welcome to our  dashboard." +
-                            "Below are some of the webpages contained in our menu.",
-                        fontSize = 20.sp,
-                        color = pink,
-                        fontWeight = FontWeight.ExtraBold,
-                        textAlign = TextAlign.Center
+            )
+        },
+        bottomBar = {
+            NavigationBar(containerColor = blue1) {
+                navItems.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        icon = { Icon(item.icon, contentDescription = item.label) },
+                        label = { Text(item.label) },
+                        selected = selectedItem == index,
+                        onClick = {
+                            selectedItem = index
+                            navController.navigate(item.route) {
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        alwaysShowLabel = true
                     )
                 }
-
-
-
             }
-            //end of card2
         }
-        //end of box
-        Spacer(modifier = Modifier.height(100.dp))
-        //row
-        Row(modifier = Modifier.padding(start = 10.dp)){
-            //card3
-
-            Card(
+    ) { padding ->
+        AnimatedVisibility(
+            visible = true,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Column(
                 modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_HOME)},
-                elevation = CardDefaults.cardElevation(5.dp)
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
+                Text(
+                    text = "Welcome Back!",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = pink,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
 
+                DashboardGrid(navController = navController)
 
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    Image(
-                        painter = painterResource(R.drawable.home),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "Home", fontSize = 10.sp)
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = blue1)
+                ) {
+                    Text(
+                        text = "Tip: You can track your rider in real-time and view trip history at any time.",
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
-
             }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_ABOUT)},
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.about),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "About", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
-            Spacer(modifier = Modifier.width(20.dp))
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_CONTACT)},
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-
-
-
-                    Image(
-                        painter = painterResource(R.drawable.contact),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "contact", fontSize = 10.sp)
-                }
-
-            }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_TRIP_IN_PROGRESS) },
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.carservice),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-                        )
-                    Text(text = " Trip in Progress", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
         }
-//end of row
-
-        Spacer(modifier = Modifier.height(20.dp))
-        //row2
-        Row(modifier = Modifier.padding(start = 10.dp)){
-            //card3
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_HISTORY)},
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-
-
-
-                    Image(
-                        painter = painterResource(R.drawable.history),
-                        contentDescription = "history",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "history", fontSize = 10.sp)
-                }
-
-            }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_PAYMENT) },
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.payment),
-                        contentDescription = "",
-                        modifier = Modifier.size(50.dp),
-
-                        )
-                    Text(text = " payment", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
-            Spacer(modifier = Modifier.width(20.dp))
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_PRIVACY_POLICY)},
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-
-
-
-                    Image(
-                        painter = painterResource(R.drawable.privacy),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "privacy&policy", fontSize = 10.sp)
-                }
-
-            }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_RIDER_CONFIRMATION) },
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.confirmation),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-                        )
-                    Text(text = " Rider confirmation", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
-        }
-//end of row2
-        Spacer(modifier = Modifier.height(20.dp))
-        //row
-        Row(modifier = Modifier.padding(start = 10.dp)){
-            //card3
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_SETTING)},
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-
-
-
-                    Image(
-                        painter = painterResource(R.drawable.settings),
-                        contentDescription = "payment",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "settings", fontSize = 10.sp)
-                }
-
-            }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_SUPPORT)},
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.support),
-                        contentDescription = "Support",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "support", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
-            Spacer(modifier = Modifier.width(20.dp))
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_PROFILE)},
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-
-
-
-                    Image(
-                        painter = painterResource(R.drawable.profile1),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-
-                        )
-                    Text(text = "Profile", fontSize = 10.sp)
-                }
-
-            }
-//end of card3
-
-            Spacer(modifier = Modifier.width(20.dp))
-            //card4
-
-            Card(
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(100.dp)
-                    .clickable{navController.navigate(ROUT_RIDER_DETAILS) },
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column (
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-                ){
-                    Image(
-                        painter = painterResource(R.drawable.details),
-                        contentDescription = "home",
-                        modifier = Modifier.size(50.dp),
-
-                        )
-                    Text(text = " Rider details", fontSize = 10.sp)
-                }
-
-            }
-//end of card4
-        }
-//end of row
-
-
-
-
-
-
-
     }
-
 }
+
+
+@Composable
+fun DashboardGrid(navController: NavController) {
+    val items = listOf(
+        Triple("Home", R.drawable.home, ROUT_HOME),
+        Triple("About", R.drawable.about, ROUT_ABOUT),
+        Triple("Contact", R.drawable.contact, ROUT_CONTACT),
+        Triple("Policy", R.drawable.carservice, ROUT_PRIVACY_POLICY),
+        Triple("History", R.drawable.history, ROUT_HISTORY),
+        Triple("Payment", R.drawable.payment, ROUT_PAYMENT),
+        Triple("Privacy", R.drawable.privacy, ROUT_PRIVACY_POLICY),
+        Triple("Confirm", R.drawable.confirmation, ROUT_RIDER_CONFIRMATION),
+        Triple("Settings", R.drawable.settings, ROUT_SETTING),
+        Triple("Support", R.drawable.support, ROUT_SUPPORT),
+        Triple("Profile", R.drawable.profile1, ROUT_PROFILE),
+        Triple("Details", R.drawable.details, ROUT_RIDER_DETAILS)
+    )
+
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        for (chunk in items.chunked(3)) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                for ((label, icon, route) in chunk) {
+                    DashboardCard(
+                        label = label,
+                        iconRes = icon,
+                        onClick = {
+                            navController.navigate(route) {
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        modifier = Modifier.weight(1f)
+                    )
+
+                }
+            }
+        }
+    }
+}
+@Composable
+fun DashboardCard(label: String, iconRes: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Card(
+        onClick = onClick,
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
+        modifier = modifier
+            .height(120.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = iconRes),
+                contentDescription = label,
+                modifier = Modifier.size(40.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = label, fontSize = 12.sp, textAlign = TextAlign.Center)
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
-fun DashboardScreenPreview(){
+fun DashboardScreenPreview() {
     DashboardScreen(rememberNavController())
-
 }
-
