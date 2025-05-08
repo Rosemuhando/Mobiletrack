@@ -1,4 +1,4 @@
-package com.rose.mobiletrack.ui.screens.privacypolicy
+package com.rose.mobiletrack.ui.screens.terms
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -12,67 +12,58 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.rose.mobiletrack.R
-import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
 import com.rose.mobiletrack.ui.theme.blue1
-import com.rose.mobiletrack.ui.theme.pink
 
-data class PolicySection(val title: String, val detail: String)
+data class TermsSection(val title: String, val content: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PrivacyPolicyScreen(navController: NavController) {
+fun TermsAndConditionsScreen(navController: NavController) {
     val context = LocalContext.current
     var isAgreed by remember { mutableStateOf(false) }
-    var selectedPolicy by remember { mutableStateOf<PolicySection?>(null) }
+    var selectedSection by remember { mutableStateOf<TermsSection?>(null) }
 
-    val policySections = listOf(
-        PolicySection(
-            "1. Data Collection",
-            "We collect your name, phone number, and location strictly to facilitate bookings, calculate distance, and determine fare pricing."
+    val termsSections = listOf(
+        TermsSection(
+            "1. Service Use",
+            "You agree to use our transport platform solely for lawful purposes and refrain from any misuse of the app or service."
         ),
-        PolicySection(
-            "2. Data Usage",
-            "Your information is used only to enable transportation services. We do not use your data for marketing or analytics without your consent."
+        TermsSection(
+            "2. User Responsibilities",
+            "You are responsible for providing accurate information during bookings and ensuring timely availability at pickup points."
         ),
-        PolicySection(
-            "3. Data Sharing",
-            "We do not share your data with third parties unless required by law or for core service delivery like confirming ride availability."
+        TermsSection(
+            "3. Payments",
+            "All fare calculations are based on distance, and you agree to pay the fee as presented before confirming a booking."
         ),
-        PolicySection(
-            "4. Data Security",
-            "We store all data securely and follow best practices to ensure it’s protected from unauthorized access or breaches."
+        TermsSection(
+            "4. Cancellation Policy",
+            "Cancellations may incur a fee. Please check our cancellation terms in advance to avoid unexpected charges."
         ),
-        PolicySection(
-            "5. Consent",
-            "By agreeing, you acknowledge that you have read and understood our privacy practices and voluntarily accept them."
+        TermsSection(
+            "5. Termination",
+            "We reserve the right to suspend or terminate accounts for violations of these terms or for fraudulent activity."
         )
     )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-           ,
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
         TopAppBar(
-            title = { Text("Privacy Policy") },
+            title = { Text("Terms & Conditions") },
             navigationIcon = {
-                IconButton(onClick = { /* handle drawer/menu */ }) {
+                IconButton(onClick = { /* Optional menu action */ }) {
                     Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
                 }
             },
@@ -83,24 +74,23 @@ fun PrivacyPolicyScreen(navController: NavController) {
             )
         )
 
-
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 30.dp, end = 30.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            policySections.forEach { policy ->
+            termsSections.forEach { section ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 6.dp)
-                        .clickable { selectedPolicy = policy },
+                        .clickable { selectedSection = section },
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = policy.title,
+                            text = section.title,
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )
@@ -116,14 +106,9 @@ fun PrivacyPolicyScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = isAgreed,
-                onCheckedChange = { isAgreed = it }
-            )
-            Text(text = "I agree to the Privacy Policy")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(checked = isAgreed, onCheckedChange = { isAgreed = it })
+            Text(text = "I agree to the Terms & Conditions")
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -131,42 +116,37 @@ fun PrivacyPolicyScreen(navController: NavController) {
         Button(
             onClick = {
                 if (isAgreed) {
-                    Toast.makeText(context, "Privacy policy accepted", Toast.LENGTH_SHORT).show()
-                    navController.navigate(ROUT_DASHBOARD)
+                    Toast.makeText(context, "Terms accepted", Toast.LENGTH_SHORT).show()
+                    navController.navigate(ROUT_PRIVACY_POLICY)
                 } else {
-                    Toast.makeText(context, "Please agree to the privacy policy", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please agree to the terms", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp),
             shape = RoundedCornerShape(10.dp),
-
             colors = ButtonDefaults.buttonColors(blue1)
         ) {
             Text("Continue")
         }
     }
 
-    // Dialog to show selected policy detail
-    selectedPolicy?.let { policy ->
+    // Dialog for section details
+    selectedSection?.let { section ->
         AlertDialog(
-            onDismissRequest = { selectedPolicy = null },
+            onDismissRequest = { selectedSection = null },
             confirmButton = {
-                TextButton(onClick = { selectedPolicy = null }) {
+                TextButton(onClick = { selectedSection = null }) {
                     Text("Close")
                 }
             },
-            title = {
-                Text(text = policy.title, fontWeight = FontWeight.Bold)
-            },
-            text = {
-                Text(text = policy.detail)
-            }
+            title = { Text(text = section.title, fontWeight = FontWeight.Bold) },
+            text = { Text(text = section.content) }
         )
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun PrivacyPolicyScreenPreview() {
-    PrivacyPolicyScreen(rememberNavController())
+@Preview(showBackground = true)
+fun TermsAndConditionsPreview() {
+    TermsAndConditionsScreen(rememberNavController())
 }

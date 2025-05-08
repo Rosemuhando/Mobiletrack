@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.ui.theme.blue1
 import kotlin.random.Random
 
@@ -36,10 +38,11 @@ fun RideDetailsScreen(navController: NavController) {
     var result by remember { mutableStateOf("") }
     var calculatedDistance by remember { mutableStateOf(0.0) }
 
+    // Function to simulate the distance between pickup and drop-off points
     fun calculateDistance(pickup: String, drop: String): Double {
         return if (pickup.lowercase() != drop.lowercase()) {
-            Random.nextDouble(0.5, 5.0)
-        } else 0.0
+            Random.nextDouble(0.5, 5.0) // Generate random distance between 0.5km and 5km
+        } else 0.0 // If pickup and drop-off are the same, distance is 0
     }
 
     Scaffold(
@@ -61,7 +64,8 @@ fun RideDetailsScreen(navController: NavController) {
             NavigationBar(containerColor = blue1) {
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /* Navigate to Home */ },
+                    onClick = { navController.navigate("home_screen")
+                        navController.navigate(ROUT_HOME)}, // Navigate to Home screen
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
                     colors = NavigationBarItemDefaults.colors(
@@ -73,7 +77,8 @@ fun RideDetailsScreen(navController: NavController) {
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = { /* Navigate to Settings */ },
+                    onClick = { navController.navigate("settings_screen")
+                        navController.navigate(ROUT_SETTING)},
                     icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
                     label = { Text("Settings") }
                 )
@@ -149,16 +154,20 @@ fun RideDetailsScreen(navController: NavController) {
                         }
 
                         calculatedDistance = calculateDistance(pickup, drop)
-                        val fare = if (calculatedDistance >= 1.0) 500 else 300
+                        val fare = if (calculatedDistance < 1.0) {
+                            300 // If the distance is less than 1 km, use the 300 Ksh fare
+                        } else {
+                            (calculatedDistance * 500).toInt() // If the distance is 1 km or more, calculate fare by multiplying distance by 500 Ksh
+                        }
 
                         result = """
-                            Name: $name
-                            Pickup: $pickup
-                            Drop-off: $drop
-                            Distance: ${"%.2f".format(calculatedDistance)} km
-                            Fare: Ksh $fare
-                            Phone: $phone
-                        """.trimIndent()
+            Name: $name
+            Pickup: $pickup
+            Drop-off: $drop
+            Distance: ${"%.2f".format(calculatedDistance)} km
+            Fare: Ksh $fare
+            Phone: $phone
+        """.trimIndent()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),

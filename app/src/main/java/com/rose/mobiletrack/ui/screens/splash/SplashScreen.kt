@@ -1,107 +1,76 @@
 package com.rose.mobiletrack.ui.screens.splash
 
-import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
-import com.rose.mobiletrack.ui.theme.pink
+import com.rose.mobiletrack.ui.theme.blue1 // Import the blue color
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SplashScreen(navController: NavController) {
-    val scope = rememberCoroutineScope()
-    var visible by remember { mutableStateOf(false) }
-
-    // Launch animation & navigation
-    LaunchedEffect(true) {
-        visible = true
-        delay(3000)
-        navController.navigate(ROUT_LOGIN)
+    // Navigate after 2.5 seconds
+    LaunchedEffect(Unit) {
+        delay(2500) // Delay for 2.5 seconds
+        navController.navigate(ROUT_LOGIN) {
+            // Pop up the splash screen from the back stack so it won't be visible again
+            popUpTo("splash") { inclusive = true }
+        }
     }
-
-    val scaleAnim = animateFloatAsState(
-        targetValue = if (visible) 1f else 0.8f,
-        animationSpec = tween(durationMillis = 800, easing = EaseOutBack),
-        label = "scale"
-    )
-
-    val alphaAnim = animateFloatAsState(
-        targetValue = if (visible) 1f else 0f,
-        animationSpec = tween(1500),
-        label = "alpha"
-    )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(
-                painter = painterResource(R.drawable.img_2),
-                contentScale = ContentScale.Crop
-            ),
+            .background(blue1) // Set the background color to blue1
+            .padding(32.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(24.dp)
+            verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.img_1),
-                contentDescription = "App Logo",
-                modifier = Modifier
-                    .size(300.dp)
-                    .scale(scaleAnim.value)
-                    .alpha(alphaAnim.value),
-                contentScale = ContentScale.Crop
+            // Place text above the image
+            Text(
+                text = "MobileTrack",
+                fontSize = 30.sp,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White // Make the text color white for contrast
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            AnimatedVisibility(visible = visible) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Mobile Track",
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = pink,
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineLarge
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Track your movements with precision and speed.",
-                        fontSize = 16.sp,
-                        color = pink.copy(alpha = 0.8f),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
+            // Make the image circular
+            Image(
+                painter = painterResource(id = R.drawable.car), // Replace with your logo
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(600.dp) // Set the size of the image
+                    .clip(CircleShape ) // Apply circular shape
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            CircularProgressIndicator(
+                modifier = Modifier.size(30.dp),
+                color = Color.White // Make the progress indicator color white for visibility
+            )
         }
     }
 }

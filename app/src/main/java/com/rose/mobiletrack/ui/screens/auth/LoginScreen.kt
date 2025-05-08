@@ -35,6 +35,8 @@ import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
 import com.rose.mobiletrack.navigation.ROUT_REGISTER
+import com.rose.mobiletrack.navigation.ROUT_TERMS_CONDITIONS
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 
@@ -64,7 +66,7 @@ fun LoginScreen(
                 if (user.role == "admin") {
                     navController.navigate(ROUT_HOME)
                 } else {
-                    navController.navigate(ROUT_PRIVACY_POLICY)
+                    navController.navigate(ROUT_TERMS_CONDITIONS)
                 }
             }
         }
@@ -72,11 +74,7 @@ fun LoginScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .paint(
-                painter = painterResource(R.drawable.img_2),
-                contentScale = ContentScale.FillBounds
-            ),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -102,16 +100,16 @@ fun LoginScreen(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.img_1),
+                painter = painterResource(id = R.drawable.car),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(300.dp)
+                    .size(200.dp)
                     .scale(scaleAnim.value)
                     .alpha(alphaAnim.value),
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             AnimatedVisibility(visible, enter = fadeIn(tween(1000))) {
                 Text(
@@ -119,7 +117,7 @@ fun LoginScreen(
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Cursive,
-                    color = pink
+                    color = blue1
                 )
             }
 
@@ -128,7 +126,7 @@ fun LoginScreen(
                     text = "Sign in to track your journey",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
-                    color =  pink,
+                    color = blue1,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 8.dp, bottom = 24.dp)
                 )

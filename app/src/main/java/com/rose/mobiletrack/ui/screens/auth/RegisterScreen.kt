@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.rose.mobiletrack.model.User
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,8 +55,7 @@ fun RegisterScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .paint(painter = painterResource(R.drawable.img_2), contentScale = ContentScale.FillBounds),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
 
@@ -65,7 +65,9 @@ fun RegisterScreen(
             Text(
                 "Create Your Account",
                 fontSize = 40.sp,
-                fontFamily = FontFamily.Cursive
+                fontFamily = FontFamily.Cursive,
+                color = blue1
+
             )
         }
 

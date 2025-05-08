@@ -21,3 +21,4 @@ interface BookingDao {
     @Query("SELECT * FROM booking WHERE id = :id")
     suspend fun getBookingById(id: Int): Booking?
 }
+

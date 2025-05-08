@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
+import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -52,7 +53,7 @@ fun ContactScreen(navController: NavController) {
                     icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
                     selected = false,
-                    onClick = { navController.navigate(ROUT_ABOUT) }
+                    onClick = { navController.navigate(ROUT_HOME) }
                 )
             }
         },

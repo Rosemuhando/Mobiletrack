@@ -1,14 +1,8 @@
 package com.rose.mobiletrack.ui.screens.dashboard
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,19 +18,20 @@ import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.*
 import com.rose.mobiletrack.ui.theme.blue1
-import com.rose.mobiletrack.ui.theme.pink
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Icon
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-
+import androidx.compose.ui.tooling.preview.Preview
 
 data class BottomNavItem(
     val label: String,
@@ -108,7 +102,7 @@ fun DashboardScreen(navController: NavController) {
                     text = "Welcome Back!",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
-                    color = pink,
+                    color = blue1,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
@@ -132,18 +126,13 @@ fun DashboardScreen(navController: NavController) {
     }
 }
 
-
 @Composable
 fun DashboardGrid(navController: NavController) {
     val items = listOf(
         Triple("Home", R.drawable.home, ROUT_HOME),
         Triple("About", R.drawable.about, ROUT_ABOUT),
         Triple("Contact", R.drawable.contact, ROUT_CONTACT),
-        Triple("Policy", R.drawable.carservice, ROUT_PRIVACY_POLICY),
-        Triple("History", R.drawable.history, ROUT_HISTORY),
         Triple("Payment", R.drawable.payment, ROUT_PAYMENT),
-        Triple("Privacy", R.drawable.privacy, ROUT_PRIVACY_POLICY),
-        Triple("Confirm", R.drawable.confirmation, ROUT_RIDER_CONFIRMATION),
         Triple("Settings", R.drawable.settings, ROUT_SETTING),
         Triple("Support", R.drawable.support, ROUT_SUPPORT),
         Triple("Profile", R.drawable.profile1, ROUT_PROFILE),
@@ -174,6 +163,7 @@ fun DashboardGrid(navController: NavController) {
         }
     }
 }
+
 @Composable
 fun DashboardCard(label: String, iconRes: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(
@@ -200,7 +190,6 @@ fun DashboardCard(label: String, iconRes: Int, onClick: () -> Unit, modifier: Mo
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

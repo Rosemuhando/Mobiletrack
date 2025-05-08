@@ -33,12 +33,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
+import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentScreen(navController: NavController) {
+fun PaymentScreen(navController: NavController, ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
@@ -73,7 +76,9 @@ fun PaymentScreen(navController: NavController) {
                     selected = selectedBottomItem == "Home",
                     onClick = {
                         selectedBottomItem = "Home"
-                        // navController.navigate("home")
+                        navController.navigate(ROUT_HOME)
+                         //navController.navigate("home")
+
                     }
                 )
                 NavigationBarItem(
@@ -82,6 +87,7 @@ fun PaymentScreen(navController: NavController) {
                     selected = selectedBottomItem == "Payment",
                     onClick = {
                         selectedBottomItem = "Payment"
+                        navController.navigate(ROUT_PAYMENT)
                         // already here
                     }
                 )
@@ -91,7 +97,8 @@ fun PaymentScreen(navController: NavController) {
                     selected = selectedBottomItem == "Profile",
                     onClick = {
                         selectedBottomItem = "Profile"
-                        // navController.navigate("profile")
+                        navController.navigate(ROUT_PROFILE)
+                         navController.navigate("profile")
                     }
                 )
             }
@@ -127,10 +134,10 @@ fun PaymentScreen(navController: NavController) {
             )
 
             Image(
-                painter = painterResource(id = R.drawable.img_7),
+                painter = painterResource(id = R.drawable.car),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(100.dp)
                     .scale(scaleAnim.value)
                     .alpha(alphaAnim.value),
                 contentScale = ContentScale.Crop
@@ -247,7 +254,7 @@ fun PaymentScreen(navController: NavController) {
                         Toast.makeText(context, "M-Pesa payment simulated!", Toast.LENGTH_LONG).show()
                         // navController.navigate("receipt")
                     }) {
-                        Text("Confirm", color = pink)
+                        Text("Confirm", color = blue1)
                     }
                 },
                 dismissButton = {
@@ -263,5 +270,7 @@ fun PaymentScreen(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun PaymentScreenPreview() {
+
     PaymentScreen(rememberNavController())
 }
+

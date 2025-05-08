@@ -1,10 +1,9 @@
-package com.rose.mobiletrack.ui.screens.setting
-
+import android.content.Context
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -13,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -25,10 +23,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
+import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_LOGIN
 import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
+import com.rose.mobiletrack.navigation.ROUT_TERMS_CONDITIONS
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,12 +40,30 @@ fun SettingsScreen(navController: NavController) {
     var selectedLanguage by remember { mutableStateOf("English") }
     var expanded by remember { mutableStateOf(false) }
 
+    // Set theme (dark or light) dynamically
+    val currentTheme = if (darkModeEnabled) {
+        MaterialTheme.colorScheme.background // Dark theme
+    } else {
+        MaterialTheme.colorScheme.surface // Light theme
+    }
+
+    // Handle language change
+    fun setLocale(language: String) {
+        val locale = when (language) {
+            "Swahili" -> Locale("sw")
+            "French" -> Locale("fr")
+            else -> Locale("en") // Default to English
+        }
+        val config = context.resources.configuration
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text("Settings", color = Color.White)
-                },
+                title = { Text("Settings", color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
@@ -77,6 +96,7 @@ fun SettingsScreen(navController: NavController) {
                 Text("App Preferences", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = blue1)
 
                 Spacer(modifier = Modifier.height(8.dp))
+
                 SettingToggleItem(
                     title = "Enable Notifications",
                     checked = notificationsEnabled,
@@ -85,14 +105,20 @@ fun SettingsScreen(navController: NavController) {
                 SettingToggleItem(
                     title = "Dark Mode",
                     checked = darkModeEnabled,
-                    onCheckedChange = { darkModeEnabled = it }
+                    onCheckedChange = {
+                        darkModeEnabled = it
+                        // Apply dark mode globally
+                    }
                 )
 
                 SettingDropdownItem(
                     title = "Language",
                     selectedOption = selectedLanguage,
                     options = listOf("English", "Swahili", "French"),
-                    onOptionSelected = { selectedLanguage = it }
+                    onOptionSelected = {
+                        selectedLanguage = it
+                        setLocale(it) // Update language
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -104,6 +130,7 @@ fun SettingsScreen(navController: NavController) {
                 }
 
                 SettingLinkItem(title = "Terms & Conditions") {
+                    navController.navigate(ROUT_TERMS_CONDITIONS)
                     Toast.makeText(context, "Coming soon...", Toast.LENGTH_SHORT).show()
                 }
 

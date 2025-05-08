@@ -8,8 +8,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -32,8 +34,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
+import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
 import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_RIDER_CONFIRMATION
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -77,11 +82,11 @@ fun HomeScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Payment") },
+                    label = { Text("payment") },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        navController.navigate(ROUT_HOME)
+                        navController.navigate(ROUT_PAYMENT)
                     }
                 )
 
@@ -105,7 +110,7 @@ fun HomeScreen(navController: NavController) {
         //FloatingActionButton
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Add action */ },
+                onClick = { navController.navigate(ROUT_DASHBOARD)/* Add action */ },
                 containerColor = blue1
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
@@ -183,7 +188,7 @@ fun CardWithImageAndText(imageRes: Int, title: String, description: String) {
                 text = title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = pink
+                color = blue1
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

@@ -1,6 +1,12 @@
 package com.rose.mobiletrack.ui.screens.about
 
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.EaseOutBack
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -10,8 +16,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +32,7 @@ import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -59,10 +70,11 @@ fun AboutScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Favorites") },
+                    label = { Text("Settings") },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1 }
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_SETTING)}
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
@@ -93,10 +105,22 @@ fun AboutScreen(navController: NavController) {
 
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize(),
 
 
                 )
+
+                Image(
+                    painter = painterResource(id = R.drawable.car),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .size(200.dp),
+                    contentScale = ContentScale.Crop,
+
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
 
                 Column(
                     modifier = Modifier

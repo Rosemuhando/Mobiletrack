@@ -11,10 +11,13 @@ const val ROUT_PRIVACY_POLICY= "privacy&policy"
 const val ROUT_SETTING= "settings"
 const val ROUT_RIDER_DETAILS= "rider details"
 const val ROUT_RIDER_CONFIRMATION= "rider confirmation"
-const val ROUT_TRIP_IN_PROGRESS= "trip in progress"
+const val ROUT_TERMS_CONDITIONS= "terms and conditions"
 const val ROUT_PROFILE= "profile"
 const val ROUT_SUPPORT= "support"
-
+const val ROUT_BOOKING= "booking"
+//booking
+const val ROUT_UPLOAD_BOOKING = "upload_task"
+const val ROUT_VIEW_BOOKING = "view_task"
 
 //authentication
 const val ROUT_REGISTER= "register"
