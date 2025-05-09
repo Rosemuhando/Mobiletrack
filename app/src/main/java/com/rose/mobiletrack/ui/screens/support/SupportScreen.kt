@@ -2,16 +2,10 @@ package com.rosemuhando.harakamall.ui.screens.support
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -23,6 +17,7 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
 import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.newwhite
@@ -66,12 +61,12 @@ fun SupportScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Profile") },
+                    label = { Text("Payment") },
                     selected = selectedIndex == 1,
                     onClick = {
                         selectedIndex = 1
-                        navController.navigate(ROUT_PROFILE)
+                        navController.navigate(ROUT_PAYMENT)
                     }
                 )
             }
@@ -99,17 +94,14 @@ fun SupportScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(32.dp))
 
+                    // Email Button
                     Button(
                         onClick = {
                             val intent = Intent(Intent.ACTION_SENDTO).apply {
                                 data = Uri.parse("mailto:support@example.com")
                                 putExtra(Intent.EXTRA_SUBJECT, "Support Request")
                             }
-                            if (intent.resolveActivity(context.packageManager) != null) {
-                                context.startActivity(intent)
-                            } else {
-                                Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
-                            }
+                            context.startActivity(intent)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -122,11 +114,12 @@ fun SupportScreen(navController: NavController) {
                     ) {
                         Icon(Icons.Default.Email, contentDescription = "Email")
                         Spacer(Modifier.width(10.dp))
-                        Text("Contact via Email")
+                        Text("Email Support")
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
 
+                    // Phone Call Button
                     Button(
                         onClick = {
                             val intent = Intent(Intent.ACTION_DIAL).apply {

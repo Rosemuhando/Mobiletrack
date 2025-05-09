@@ -15,6 +15,8 @@ const val ROUT_TERMS_CONDITIONS= "terms and conditions"
 const val ROUT_PROFILE= "profile"
 const val ROUT_SUPPORT= "support"
 const val ROUT_BOOKING= "booking"
+const val ROUT_EDIT_PROFILE = "edit_profile"
+
 //booking
 const val ROUT_UPLOAD_BOOKING = "upload_task"
 const val ROUT_VIEW_BOOKING = "view_task"
@@ -24,4 +26,6 @@ const val ROUT_REGISTER= "register"
 const val ROUT_LOGIN = "Login"
 
 
+// ✅ Helper function for navigation
+fun editbookingRoute(bookingId: Int) = "edit_booking/$bookingId"
 

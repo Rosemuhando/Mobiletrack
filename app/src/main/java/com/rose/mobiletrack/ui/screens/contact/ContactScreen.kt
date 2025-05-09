@@ -13,19 +13,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.rose.mobiletrack.R
-import com.rose.mobiletrack.navigation.ROUT_ABOUT
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
@@ -83,29 +78,30 @@ fun ContactScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
+                // Email Button
                 Button(
                     onClick = {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:support@mobiletrack.com")
-                            putExtra(Intent.EXTRA_SUBJECT, "Customer Support Inquiry")
+                            data = Uri.parse("mailto:support@example.com")
+                            putExtra(Intent.EXTRA_SUBJECT, "Support Request")
                         }
-                        if (intent.resolveActivity(context.packageManager) != null) {
-                            context.startActivity(intent)
-                        } else {
-                            Toast.makeText(context, "No email app available", Toast.LENGTH_SHORT).show()
-                        }
+                        context.startActivity(intent)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    shape = RoundedCornerShape(10.dp),
-
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00C6FF))
+                        .height(50.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = blue1,
+                        contentColor = Color.White
+                    )
                 ) {
                     Icon(Icons.Default.Email, contentDescription = "Email")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Email Support", color = Color.White)
+                    Spacer(Modifier.width(10.dp))
+                    Text("Email Support")
                 }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Button(
                     onClick = {
@@ -118,8 +114,7 @@ fun ContactScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
                     shape = RoundedCornerShape(10.dp),
-
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0072FF))
+                    colors = ButtonDefaults.buttonColors(containerColor = blue1)
                 ) {
                     Icon(Icons.Default.Phone, contentDescription = "Phone")
                     Spacer(modifier = Modifier.width(8.dp))
@@ -143,7 +138,6 @@ fun ContactInfoItem(icon: androidx.compose.ui.graphics.vector.ImageVector, label
         Column {
             Text(text = label, fontSize = 14.sp)
             Spacer(modifier = Modifier.width(12.dp))
-
             Text(text = value, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
     }

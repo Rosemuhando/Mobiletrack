@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
 import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.ui.theme.blue1
 import kotlin.random.Random
@@ -64,7 +66,7 @@ fun RideDetailsScreen(navController: NavController) {
             NavigationBar(containerColor = blue1) {
                 NavigationBarItem(
                     selected = false,
-                    onClick = { navController.navigate("home_screen")
+                    onClick = {
                         navController.navigate(ROUT_HOME)}, // Navigate to Home screen
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
@@ -77,10 +79,11 @@ fun RideDetailsScreen(navController: NavController) {
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = { navController.navigate("settings_screen")
-                        navController.navigate(ROUT_SETTING)},
-                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                    label = { Text("Settings") }
+                    onClick = {
+                        navController.navigate(ROUT_PAYMENT)
+                    },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Settings") },
+                    label = { Text("Payment") }
                 )
             }
         },

@@ -78,7 +78,7 @@ fun SettingsScreen(navController: NavController) {
                     icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
                     selected = false,
-                    onClick = { navController.navigate(ROUT_ABOUT) }
+                    onClick = { navController.navigate(ROUT_HOME) }
                 )
             }
         },

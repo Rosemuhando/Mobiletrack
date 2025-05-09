@@ -34,11 +34,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
 import com.rose.mobiletrack.navigation.ROUT_ABOUT
+import com.rose.mobiletrack.navigation.ROUT_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PAYMENT
 import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.navigation.ROUT_RIDER_CONFIRMATION
+import com.rose.mobiletrack.navigation.ROUT_UPLOAD_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 
@@ -94,10 +96,10 @@ fun HomeScreen(navController: NavController) {
 
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    label = { Text("booking") },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
-                         navController.navigate(ROUT_PROFILE)
+                         navController.navigate(ROUT_UPLOAD_BOOKING)
 
                     }
                 )

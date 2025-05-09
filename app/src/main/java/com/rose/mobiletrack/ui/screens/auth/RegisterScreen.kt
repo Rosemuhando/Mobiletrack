@@ -16,10 +16,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -46,19 +44,22 @@ fun RegisterScreen(
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    var role by remember { mutableStateOf("user") } // Role state
     val context = LocalContext.current
+
     val animatedAlpha by animateFloatAsState(
         targetValue = 1f,
         animationSpec = tween(durationMillis = 1500, easing = LinearEasing),
         label = "Animated Alpha"
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+    val roleOptions = listOf("user", "admin")
+    var expanded by remember { mutableStateOf(false) }
 
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.height(8.dp))
         AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
@@ -67,13 +68,12 @@ fun RegisterScreen(
                 fontSize = 40.sp,
                 fontFamily = FontFamily.Cursive,
                 color = blue1
-
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //Username
+        // Username Input
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
@@ -81,13 +81,10 @@ fun RegisterScreen(
             leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Username Icon") },
             modifier = Modifier.fillMaxWidth()
         )
-        //End of username
-
-
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        //Email
+        // Email Input
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -96,16 +93,10 @@ fun RegisterScreen(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
         )
-        //End of email
 
         Spacer(modifier = Modifier.height(8.dp))
 
-
-        //Role
-        var role by remember { mutableStateOf("user") }
-        val roleOptions = listOf("user", "admin")
-        var expanded by remember { mutableStateOf(false) }
-
+        // Role Dropdown
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
@@ -133,12 +124,8 @@ fun RegisterScreen(
                 }
             }
         }
-        //End of role
 
-
-
-
-
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Password Input Field with Show/Hide Toggle
         OutlinedTextField(
@@ -148,7 +135,7 @@ fun RegisterScreen(
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
             trailingIcon = {
-                val image = if (passwordVisible) painterResource(R.drawable.visibility)  else painterResource(R.drawable.visibilityoff)
+                val image = if (passwordVisible) painterResource(R.drawable.visibility) else painterResource(R.drawable.visibilityoff)
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
                 }
@@ -167,7 +154,7 @@ fun RegisterScreen(
             visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Confirm Password Icon") },
             trailingIcon = {
-                val image = if (confirmPasswordVisible) painterResource(R.drawable.visibility)  else painterResource(R.drawable.visibilityoff)
+                val image = if (confirmPasswordVisible) painterResource(R.drawable.visibility) else painterResource(R.drawable.visibilityoff)
                 IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                     Icon(image, contentDescription = if (confirmPasswordVisible) "Hide Password" else "Show Password")
                 }
@@ -178,6 +165,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(5.dp))
 
+        // Register Button
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -210,6 +198,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(5.dp))
 
+        // Link to Login Screen
         TextButton(
             onClick = { navController.navigate(ROUT_LOGIN) }
         ) {

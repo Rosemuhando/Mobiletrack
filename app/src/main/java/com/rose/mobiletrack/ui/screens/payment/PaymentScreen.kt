@@ -1,5 +1,8 @@
 package com.rose.mobiletrack.ui.screens.payment
 
+import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.core.EaseOutBack
 import androidx.compose.animation.core.animateFloatAsState
@@ -33,15 +36,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PAYMENT
-import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_UPLOAD_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1
-import com.rose.mobiletrack.ui.theme.pink
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentScreen(navController: NavController, ) {
+fun PaymentScreen(navController: NavController) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
@@ -49,8 +53,6 @@ fun PaymentScreen(navController: NavController, ) {
     var cardNumber by remember { mutableStateOf("") }
     var expiry by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var showDialog by remember { mutableStateOf(false) }
     var selectedBottomItem by remember { mutableStateOf("Payment") }
 
     Scaffold(
@@ -60,10 +62,10 @@ fun PaymentScreen(navController: NavController, ) {
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = blue1,
                     titleContentColor = Color.White
-                ), navigationIcon = {
-                    IconButton(onClick = { /* handle drawer/menu */ }) {
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { /* handle menu */ }) {
                         Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu", tint = Color.White)
-
                     }
                 },
             )
@@ -77,8 +79,6 @@ fun PaymentScreen(navController: NavController, ) {
                     onClick = {
                         selectedBottomItem = "Home"
                         navController.navigate(ROUT_HOME)
-                         //navController.navigate("home")
-
                     }
                 )
                 NavigationBarItem(
@@ -88,17 +88,15 @@ fun PaymentScreen(navController: NavController, ) {
                     onClick = {
                         selectedBottomItem = "Payment"
                         navController.navigate(ROUT_PAYMENT)
-                        // already here
                     }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    label = { Text("Booking") },
                     selected = selectedBottomItem == "Profile",
                     onClick = {
                         selectedBottomItem = "Profile"
-                        navController.navigate(ROUT_PROFILE)
-                         navController.navigate("profile")
+                        navController.navigate(ROUT_UPLOAD_BOOKING)
                     }
                 )
             }
@@ -112,9 +110,7 @@ fun PaymentScreen(navController: NavController, ) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
-            //Animated IMage
+            // Animated Image (Logo)
             var visible by remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
@@ -126,7 +122,6 @@ fun PaymentScreen(navController: NavController, ) {
                 animationSpec = tween(durationMillis = 800, easing = EaseOutBack),
                 label = "scale"
             )
-
             val alphaAnim = animateFloatAsState(
                 targetValue = if (visible) 1f else 0f,
                 animationSpec = tween(1500),
@@ -142,13 +137,8 @@ fun PaymentScreen(navController: NavController, ) {
                     .alpha(alphaAnim.value),
                 contentScale = ContentScale.Crop
             )
-            //End
 
             Spacer(modifier = Modifier.height(32.dp))
-
-
-
-
 
             Text(
                 text = "Payment Method",
@@ -160,7 +150,6 @@ fun PaymentScreen(navController: NavController, ) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Payment Method Selection
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(selected = selectedMethod == "Card", onClick = { selectedMethod = "Card" })
                 Text("Card", modifier = Modifier
@@ -183,12 +172,29 @@ fun PaymentScreen(navController: NavController, ) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    context,
+                    { _, selectedYear, selectedMonth, _ ->
+                        expiry = String.format("%02d/%02d", selectedMonth + 1, selectedYear % 100)
+                    },
+                    year,
+                    month,
+                    day
+                )
+
                 OutlinedTextField(
                     value = expiry,
-                    onValueChange = { expiry = it },
+                    onValueChange = { },
                     label = { Text("Expiry Date (MM/YY)") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
+                    readOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { datePickerDialog.show() }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -201,14 +207,6 @@ fun PaymentScreen(navController: NavController, ) {
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth()
                 )
-            } else {
-                OutlinedTextField(
-                    value = phoneNumber,
-                    onValueChange = { phoneNumber = it },
-                    label = { Text("M-Pesa Phone Number") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -219,15 +217,16 @@ fun PaymentScreen(navController: NavController, ) {
                         cardNumber.length in 12..19 &&
                                 expiry.matches(Regex("\\d{2}/\\d{2}")) &&
                                 cvv.length == 3
-                    } else {
-                        phoneNumber.length == 10 && phoneNumber.startsWith("07")
-                    }
+                    } else true // M-Pesa doesn't require input now
 
                     if (isValid) {
                         if (selectedMethod == "Card") {
                             Toast.makeText(context, "Card payment successful!", Toast.LENGTH_LONG).show()
                         } else {
-                            showDialog = true
+                            // Launch M-Pesa USSD code dialer
+                            val ussdIntent = Intent(Intent.ACTION_DIAL)
+                            ussdIntent.data = Uri.parse("tel:" + Uri.encode("*234#"))
+                            context.startActivity(ussdIntent)
                         }
                     } else {
                         Toast.makeText(context, "Invalid payment details!", Toast.LENGTH_SHORT).show()
@@ -235,34 +234,10 @@ fun PaymentScreen(navController: NavController, ) {
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
-
                 colors = ButtonDefaults.buttonColors(blue1)
             ) {
                 Text("Pay Now")
             }
-        }
-
-        // M-Pesa Simulation
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = { Text("Simulate M-Pesa Payment") },
-                text = { Text("Confirm M-Pesa payment of Ksh 500 to MobileTrack?") },
-                confirmButton = {
-                    TextButton(onClick = {
-                        showDialog = false
-                        Toast.makeText(context, "M-Pesa payment simulated!", Toast.LENGTH_LONG).show()
-                        // navController.navigate("receipt")
-                    }) {
-                        Text("Confirm", color = blue1)
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showDialog = false }) {
-                        Text("Cancel")
-                    }
-                }
-            )
         }
     }
 }
@@ -270,7 +245,5 @@ fun PaymentScreen(navController: NavController, ) {
 @Preview(showBackground = true)
 @Composable
 fun PaymentScreenPreview() {
-
     PaymentScreen(rememberNavController())
 }
-

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Person
@@ -48,6 +49,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rose.mobiletrack.model.Booking
+import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
+import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_SUPPORT
+import com.rose.mobiletrack.navigation.ROUT_VIEW_BOOKING
+import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.viewmodel.BookingViewModel
 import java.util.Calendar
 
@@ -70,38 +78,51 @@ fun UploadBookingScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.LightGray,
+                    containerColor = blue1,
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White
                 )
             )
         },
         bottomBar = {
-            NavigationBar(containerColor = Color.LightGray) {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
-                    selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0 }
-                )
+
+                NavigationBar(containerColor = blue1){
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Default.Home, contentDescription = "home") },
+                        label = { Text("Search") },
+                        selected = selectedIndex == 0,
+                        onClick = { selectedIndex = 0
+                            navController.navigate(ROUT_HOME)
+                            //navController.navigate(ROUT_HOME)
+                        }
+                    )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    label = { Text("support") },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1 }
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_SUPPORT)
+                    }
                 )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
-                    selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2 }
-                )
-            }
+
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Default.Info, contentDescription = "Profile") },
+                        label = { Text("payment") },
+                        selected = selectedIndex == 2,
+                        onClick = { selectedIndex = 2
+                            navController.navigate(ROUT_PAYMENT)
+
+                        }
+                    )
+
+
+
+                }
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = Color.LightGray
+                onClick = { navController.navigate(ROUT_DASHBOARD)/* Add action */ },
+                containerColor = blue1
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
@@ -234,7 +255,7 @@ fun UploadBookingScreen(
                                 ).show()
                             },
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(Color.Gray),
+                            colors = ButtonDefaults.buttonColors(blue1),
                             modifier = Modifier.height(65.dp)
                         ) {
                             Text("Date & Time")
@@ -273,8 +294,11 @@ fun UploadBookingScreen(
                             } else {
                                 bookingViewModel.insert(booking)
                             }
-                            navController.navigate("ROUT_VIEW_Booking")
+                            navController.navigate(ROUT_VIEW_BOOKING)
                         },
+                        modifier = Modifier,
+
+                        colors = ButtonDefaults.buttonColors(blue1),
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Text(if (editingBooking != null) "Update Booking" else "Upload Booking")
@@ -285,6 +309,3 @@ fun UploadBookingScreen(
     )
 }
 
-private fun Int.toDp() {
-    TODO("Not yet implemented")
-}

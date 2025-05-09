@@ -32,10 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
 import com.rose.mobiletrack.navigation.ROUT_REGISTER
 import com.rose.mobiletrack.navigation.ROUT_TERMS_CONDITIONS
+import com.rose.mobiletrack.navigation.ROUT_VIEW_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.pink
 import com.rosemuhando.harakamall.viewmodel.AuthViewModel
@@ -64,9 +66,9 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
-                    navController.navigate(ROUT_HOME)
+                    navController.navigate(ROUT_VIEW_BOOKING)
                 } else {
-                    navController.navigate(ROUT_TERMS_CONDITIONS)
+                    navController.navigate(ROUT_PRIVACY_POLICY)
                 }
             }
         }
@@ -208,8 +210,7 @@ fun LoginScreen(
             // Navigate to Register
             TextButton(onClick = { navController.navigate(ROUT_REGISTER) }) {
                 Text(
-                    text = "Don't have an account? Register",
-                    color = Color.White
+                    text = "Don't have an account? Register"
                 )
             }
         }

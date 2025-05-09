@@ -1,5 +1,6 @@
 package com.rose.mobiletrack.navigation
 
+
 import SettingsScreen
 import UploadBookingScreen
 import android.os.Build
@@ -25,7 +26,6 @@ import com.rose.mobiletrack.ui.screens.dashboard.DashboardScreen
 import com.rose.mobiletrack.ui.screens.home.HomeScreen
 import com.rose.mobiletrack.ui.screens.payment.PaymentScreen
 import com.rose.mobiletrack.ui.screens.privacypolicy.PrivacyPolicyScreen
-import com.rose.mobiletrack.ui.screens.profile.ProfileScreen
 import com.rose.mobiletrack.ui.screens.ridedetails.ContactScreen
 import com.rose.mobiletrack.ui.screens.ridedetails.RideDetailsScreen
 import com.rose.mobiletrack.ui.screens.splash.SplashScreen
@@ -42,7 +42,7 @@ import com.rosemuhando.harakamall.viewmodel.AuthViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUT_SPLASH,
+    startDestination: String = ROUT_SPLASH
 
     ) {
 
@@ -82,9 +82,7 @@ fun AppNavHost(
         composable(ROUT_PRIVACY_POLICY) {
             PrivacyPolicyScreen(navController)
         }
-        composable(ROUT_PROFILE) {
-            ProfileScreen(navController)
-        }
+
 
         composable(ROUT_PAYMENT) {
             PaymentScreen(navController)

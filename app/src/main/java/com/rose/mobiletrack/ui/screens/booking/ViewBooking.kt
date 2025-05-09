@@ -2,8 +2,6 @@ package com.rose.mobiletrack.ui.theme.screens.booking
 
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,8 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_PAYMENT
+import com.rose.mobiletrack.navigation.ROUT_PROFILE
+import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.navigation.ROUT_UPLOAD_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_VIEW_BOOKING
+import com.rose.mobiletrack.ui.theme.blue1
+import com.rose.mobiletrack.ui.theme.grey
+import com.rose.mobiletrack.ui.theme.newwhite
 import com.rose.mobiletrack.viewmodel.BookingViewModel
 
 import kotlinx.coroutines.delay
@@ -38,7 +43,7 @@ fun ViewBookingScreen(
     var selectedIndex by remember { mutableStateOf(0) }
     val contentList by bookingViewModel.allBooking.collectAsState(initial = emptyList())
 
-    val carouselImages = listOf(R.drawable.img_1, R.drawable.img_2, R.drawable.img_2)
+    val carouselImages = listOf(R.drawable.car, R.drawable.img_1, R.drawable.img)
     var currentImageIndex by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -58,7 +63,7 @@ fun ViewBookingScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.LightGray,
+                    containerColor = blue1,
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White
                 )
@@ -66,32 +71,43 @@ fun ViewBookingScreen(
         },
 
         bottomBar = {
-            NavigationBar(containerColor = Color.LightGray) {
+            NavigationBar(containerColor = blue1){
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "home") },
+                    label = { Text("Search") },
                     selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0 }
+                    onClick = { selectedIndex = 0
+                        navController.navigate(ROUT_HOME)
+                        //navController.navigate(ROUT_HOME)
+                    }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Favorites") },
+                    label = { Text("settings") },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1 }
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_SETTING)}
+
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Profile") },
+                    label = { Text("payment") },
                     selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2 }
+                    onClick = { selectedIndex = 2
+                        navController.navigate(ROUT_PAYMENT)
+
+                    }
                 )
+
+
+
             }
         },
 
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate(ROUT_UPLOAD_BOOKING) },
-                containerColor = Color.LightGray
+                containerColor = blue1
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
@@ -133,7 +149,7 @@ fun ViewBookingScreen(
                 Button(
                     onClick = { navController.navigate(ROUT_VIEW_BOOKING) },
                     shape = RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp),
-                    colors = ButtonDefaults.buttonColors(Color.Black)
+                    colors = ButtonDefaults.buttonColors(blue1)
                 ) {
                     Text(
                         text = "View Bookings",
@@ -143,7 +159,7 @@ fun ViewBookingScreen(
                 Button(
                     onClick = { navController.navigate(ROUT_UPLOAD_BOOKING) },
                     shape = RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp),
-                    colors = ButtonDefaults.buttonColors(Color.Gray),
+                    colors = ButtonDefaults.buttonColors(blue1),
                 ) {
                     Text(
                         text = "Add Booking",
@@ -161,14 +177,14 @@ fun ViewBookingScreen(
             ) {
                 items(contentList.size) { index ->
                     val booking = contentList[index]
-                    val backgroundColor = if (index % 2 == 0) Color(0xFFEDEDE2) else Color(0xFFD5E9EC)
+                    val backgroundColor = if (index % 2 == 0) Color(0xFFD5E9EC)else Color(0xFFD5E9EC)
 
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),
                         elevation = CardDefaults.cardElevation(6.dp),
-                        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+                        colors = CardDefaults.cardColors(containerColor = grey),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Column(
@@ -178,52 +194,67 @@ fun ViewBookingScreen(
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.name1), contentDescription = "", tint = Color.Gray)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = "Name: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = booking.name, fontSize = 16.sp)
+                                Icon(painter = painterResource(R.drawable.name3), contentDescription = "", tint = blue1)
+                                Spacer(Modifier.width(5.dp))
+                                Text(text = "Name: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                                Text(text = booking.name, fontSize = 10.sp)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.name1), contentDescription = "", tint = Color.Gray)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = "Description: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = booking.description, fontSize = 16.sp, maxLines = 2)
+                                Icon(painter = painterResource(R.drawable.formatlistnumbered), contentDescription = "", tint = blue1)
+                                Spacer(Modifier.width(5.dp))
+                                Text(text = "Description: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                                Text(text = booking.description, fontSize = 10.sp, maxLines = 2)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.formatlistnumbered), contentDescription = "", tint = Color.Gray)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = "Phone: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = booking.phone, fontSize = 16.sp)
+                                Icon(painter = painterResource(R.drawable.contact), contentDescription = "", tint = blue1)
+                                Spacer(Modifier.width(5.dp))
+                                Text(text = "Phone: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                                Text(text = booking.phone, fontSize = 10.sp)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.event), contentDescription = "", tint = Color.Gray)
+                                Icon(painter = painterResource(R.drawable.car), contentDescription = "", tint = blue1)
                                 Spacer(Modifier.width(8.dp))
-                                Text(text = "Pickup: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = booking.pickup, fontSize = 16.sp)
+                                Text(text = "Pickup: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                                Text(text = booking.pickup, fontSize = 10.sp)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.event), contentDescription = "", tint = Color.Gray)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = "Drop: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Icon(painter = painterResource(R.drawable.carservice), contentDescription = "", tint = blue1)
+                                Spacer(Modifier.width(5.dp))
+                                Text(text = "Drop: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
                                 Text(text = booking.drop, fontSize = 16.sp)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(painter = painterResource(R.drawable.event), contentDescription = "", tint = Color.Gray)
-                                Spacer(Modifier.width(8.dp))
-                                Text(text = "Date & Time: ", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = booking.date, fontSize = 16.sp)
+                                Icon(painter = painterResource(R.drawable.event), contentDescription = "", tint = blue1)
+                                Spacer(Modifier.width(5.dp))
+                                Text(text = "Date & Time: ", fontWeight = FontWeight.Bold, fontSize = 10.sp)
+                                Text(text = booking.date, fontSize = 10.sp)
                             }
+                            Spacer(Modifier.height(5.dp))
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 8.dp),
                                 horizontalArrangement = Arrangement.End
                             ) {
-                                IconButton(onClick = { onEdit(booking.id) }) {
-                                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Color.Blue)
-                                }
+
                                 IconButton(onClick = { bookingViewModel.delete(booking) }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red)
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = "Delete",
+                                        tint = blue1
+                                    )
+                                }
+
+                                    Spacer(modifier = Modifier.width(5.dp))
+
+                                    IconButton(onClick = { onEdit(booking.id) }) {
+                                        Icon(Icons.Default.Edit, contentDescription = "Edit", tint = blue1)
+                                    }
                                 }
                             }
                         }
@@ -232,4 +263,4 @@ fun ViewBookingScreen(
             }
         }
     }
-}
+

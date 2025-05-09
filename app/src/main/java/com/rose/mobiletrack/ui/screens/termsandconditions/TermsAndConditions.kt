@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.rose.mobiletrack.navigation.ROUT_HOME
+import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
 import com.rose.mobiletrack.ui.theme.blue1
 
@@ -74,55 +74,65 @@ fun TermsAndConditionsScreen(navController: NavController) {
             )
         )
 
-        Column(
+        // Scrollable content for the terms
+        Box(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 30.dp, end = 30.dp)
-                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 30.dp)
         ) {
-            termsSections.forEach { section ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 6.dp)
-                        .clickable { selectedSection = section },
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = section.title,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            text = "Tap to read more...",
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                termsSections.forEach { section ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 6.dp)
+                            .clickable { selectedSection = section },
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = section.title,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+                            Text(
+                                text = "Tap to read more...",
+                                fontSize = 12.sp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        // Checkbox Row
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.padding(horizontal = 30.dp)
+        ) {
             Checkbox(checked = isAgreed, onCheckedChange = { isAgreed = it })
-            Text(text = "I agree to the Terms & Conditions")
+            Text("I agree to the Terms & Conditions")
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
+        // Button
         Button(
             onClick = {
                 if (isAgreed) {
                     Toast.makeText(context, "Terms accepted", Toast.LENGTH_SHORT).show()
-                    navController.navigate(ROUT_PRIVACY_POLICY)
+                    navController.navigate(ROUT_DASHBOARD)
                 } else {
                     Toast.makeText(context, "Please agree to the terms", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp, vertical = 10.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(blue1)
         ) {

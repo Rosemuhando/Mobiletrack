@@ -23,6 +23,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -46,7 +47,7 @@ fun DashboardScreen(navController: NavController) {
 
     val navItems = listOf(
         BottomNavItem("Home", Icons.Default.Home, ROUT_HOME),
-        BottomNavItem("Profile", Icons.Default.Person, ROUT_PROFILE),
+        BottomNavItem("Rider details", Icons.Default.Info, ROUT_RIDER_DETAILS),
         BottomNavItem("Settings", Icons.Default.Settings, ROUT_SETTING)
     )
 
@@ -135,8 +136,9 @@ fun DashboardGrid(navController: NavController) {
         Triple("Payment", R.drawable.payment, ROUT_PAYMENT),
         Triple("Settings", R.drawable.settings, ROUT_SETTING),
         Triple("Support", R.drawable.support, ROUT_SUPPORT),
-        Triple("Profile", R.drawable.profile1, ROUT_PROFILE),
-        Triple("Details", R.drawable.details, ROUT_RIDER_DETAILS)
+        Triple("privacy", R.drawable.privacy, ROUT_PRIVACY_POLICY),
+        Triple("Details", R.drawable.details, ROUT_RIDER_DETAILS),
+        Triple("Book now", R.drawable.confirmation, ROUT_UPLOAD_BOOKING)
     )
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
