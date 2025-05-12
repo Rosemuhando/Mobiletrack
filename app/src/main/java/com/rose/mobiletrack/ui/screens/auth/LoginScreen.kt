@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.rose.mobiletrack.R
+import com.rose.mobiletrack.navigation.ROUT_ADMIN_VIEW_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PRIVACY_POLICY
@@ -66,7 +67,7 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
-                    navController.navigate(ROUT_VIEW_BOOKING)
+                    navController.navigate(ROUT_ADMIN_VIEW_BOOKING)
                 } else {
                     navController.navigate(ROUT_PRIVACY_POLICY)
                 }

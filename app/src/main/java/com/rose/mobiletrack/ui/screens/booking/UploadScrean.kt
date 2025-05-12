@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -52,7 +51,6 @@ import com.rose.mobiletrack.model.Booking
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PAYMENT
-import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.navigation.ROUT_SUPPORT
 import com.rose.mobiletrack.navigation.ROUT_VIEW_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1
@@ -218,6 +216,28 @@ fun UploadBookingScreen(
                         label = { Text("Description") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
+
+                    Spacer(Modifier.height(8.dp))
+
+                    OutlinedTextField(
+                        value = pickup,
+                        onValueChange = { pickup = it },
+                        label = { Text("Pickup Location") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+
+                    Spacer(Modifier.height(8.dp))
+
+                    OutlinedTextField(
+                        value = drop,
+                        onValueChange = {drop= it },
+                        label = { Text("Dropoff Location") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+
 
                     Spacer(modifier = Modifier.height(8.dp))
 

@@ -29,10 +29,8 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.R
-import com.rose.mobiletrack.navigation.ROUT_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_DASHBOARD
 import com.rose.mobiletrack.navigation.ROUT_HOME
-import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.navigation.ROUT_UPLOAD_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1

@@ -18,10 +18,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rose.mobiletrack.navigation.ROUT_HOME
 import com.rose.mobiletrack.navigation.ROUT_PAYMENT
-import com.rose.mobiletrack.navigation.ROUT_PROFILE
 import com.rose.mobiletrack.ui.theme.blue1
 import com.rose.mobiletrack.ui.theme.newwhite
-import com.rose.mobiletrack.ui.theme.pink
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

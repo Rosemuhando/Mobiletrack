@@ -12,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,14 +25,13 @@ import com.rose.mobiletrack.navigation.ROUT_SETTING
 import com.rose.mobiletrack.navigation.ROUT_UPLOAD_BOOKING
 import com.rose.mobiletrack.navigation.ROUT_VIEW_BOOKING
 import com.rose.mobiletrack.ui.theme.blue1
-import com.rose.mobiletrack.ui.theme.grey
 import com.rose.mobiletrack.viewmodel.BookingViewModel
 
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ViewBookingScreen(
+fun AdminViewBookingScreen(
     navController: NavController,
     bookingViewModel: BookingViewModel,
     onEdit: (Int) -> Unit
@@ -235,7 +233,18 @@ fun ViewBookingScreen(
                                 horizontalArrangement = Arrangement.End
                             ) {
 
+                                IconButton(onClick = { bookingViewModel.delete(booking) }) {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = "Delete",
+                                        tint = blue1
+                                    )
+                                }
 
+                                Spacer(modifier = Modifier.width(5.dp))
+
+                                IconButton(onClick = { onEdit(booking.id) }) {
+                                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = blue1)
                                 }
                             }
                         }
@@ -244,4 +253,5 @@ fun ViewBookingScreen(
             }
         }
     }
+}
 

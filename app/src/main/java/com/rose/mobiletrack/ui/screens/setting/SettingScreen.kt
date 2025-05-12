@@ -1,3 +1,4 @@
+import android.R.attr.theme
 import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
@@ -42,7 +43,7 @@ fun SettingsScreen(navController: NavController) {
 
     // Set theme (dark or light) dynamically
     val currentTheme = if (darkModeEnabled) {
-        MaterialTheme.colorScheme.background // Dark theme
+        MaterialTheme.colorScheme.background //Dark theme
     } else {
         MaterialTheme.colorScheme.surface // Light theme
     }

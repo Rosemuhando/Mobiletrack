@@ -8,16 +8,12 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.rose.mobiletrack.data.BookingDatabase
 import com.rose.mobiletrack.data.UserDatabase
-import com.rose.mobiletrack.model.Booking
 import com.rose.mobiletrack.repository.BookingRepository
 import com.rose.mobiletrack.repository.UserRepository
 import com.rose.mobiletrack.ui.screens.about.AboutScreen
@@ -30,6 +26,7 @@ import com.rose.mobiletrack.ui.screens.ridedetails.ContactScreen
 import com.rose.mobiletrack.ui.screens.ridedetails.RideDetailsScreen
 import com.rose.mobiletrack.ui.screens.splash.SplashScreen
 import com.rose.mobiletrack.ui.screens.terms.TermsAndConditionsScreen
+import com.rose.mobiletrack.ui.theme.screens.booking.AdminViewBookingScreen
 import com.rose.mobiletrack.ui.theme.screens.booking.ViewBookingScreen
 import com.rose.mobiletrack.viewmodel.BookingViewModel
 import com.rosemuhando.harakamall.ui.screens.auth.LoginScreen
@@ -133,7 +130,11 @@ fun AppNavHost(
             }
         }
 
-
+        composable(ROUT_ADMIN_VIEW_BOOKING) {
+            AdminViewBookingScreen(navController, bookingViewModel) { id ->
+                navController.navigate("upload_booking?id=$id")
+            }
+        }
 //rider history
     }
 
